@@ -8,6 +8,16 @@ Page({
 
   },
 
+  // 点击登录页面
+  onClickNavigateLogin: function (event) {
+    //页面跳转  ---页面跳转以后 需要展示登录页面
+    var id = event.currentTarget.dataset.id
+    //进行页面跳转
+    wx.navigateTo({
+      url: '../userLogin/userLogin?id=' + id,
+    })
+  },
+
   /**
    * 生命周期函数--监听页面加载
    */

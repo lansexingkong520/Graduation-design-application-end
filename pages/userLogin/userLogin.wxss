@@ -1,0 +1,20 @@
+/* pages/userLogin/userLogin.wxss */
+.loginContainer{
+  width: 300px;
+  position: relative;
+  left: 10px;
+  top: 80px;
+}
+
+.registers{
+  font-size: 14px;
+  position: relative;
+  top: 40px;
+}
+
+.registers1{
+  font-size: 14px;
+  position: relative;
+  top: 40px;
+  left: 185px;
+}

@@ -1,2 +1,9 @@
 <!--pages/personal/personal.wxml-->
+<view class="headCard">
+  <view bindtap="onClickNavigateLogin" class="LAvatar">
+    <l-avatar src="/image/user_icon.png"></l-avatar>
+    <text class="login">点击登录</text>
+    <text class="login1">用户编号：0</text>
+  </view>
+</view>
 <text>pages/personal/personal.wxml</text>

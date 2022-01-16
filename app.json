@@ -1,11 +1,14 @@
 {
   "pages": [
+    "pages/personal/personal",
     "pages/index/index",
     "pages/map/map",
     "pages/message/message",
-    "pages/personal/personal",
     "pages/addNotes/addNotes",
-    "pages/logs/logs"
+    "pages/logs/logs",
+    "pages/userLogin/userLogin",
+    "pages/userRegister/userRegister",
+    "pages/forgetPW/forgetPW"
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -31,7 +34,8 @@
         "pagePath": "pages/addNotes/addNotes",
         "iconPath": "image/addNotes.png",
         "selectedIconPath": "image/addNotes.png"
-      },      {
+      },
+      {
         "pagePath": "pages/message/message",
         "iconPath": "image/message_icon.png",
         "selectedIconPath": "image/message1_icon.png",
