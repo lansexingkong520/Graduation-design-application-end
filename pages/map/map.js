@@ -7,7 +7,10 @@ Page({
   data: {
 
   },
-
+  // 监听tabBar事件
+  onTabItemTap: function (item) {
+    wx.setStorageSync('beforeTabBar', item)
+  },
   /**
    * 生命周期函数--监听页面加载
    */

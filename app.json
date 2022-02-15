@@ -1,14 +1,16 @@
 {
   "pages": [
-    "pages/personal/personal",
     "pages/index/index",
+    "pages/personal/personal",
     "pages/map/map",
     "pages/message/message",
     "pages/addNotes/addNotes",
     "pages/logs/logs",
     "pages/userLogin/userLogin",
     "pages/userRegister/userRegister",
-    "pages/forgetPW/forgetPW"
+    "pages/forgetPW/forgetPW",
+    "pages/addNotes/addTransitionPage",
+    "pages/loginRemind/loginRemind"
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -31,7 +33,7 @@
         "text": "地图"
       },
       {
-        "pagePath": "pages/addNotes/addNotes",
+        "pagePath": "pages/addNotes/addTransitionPage",
         "iconPath": "image/addNotes.png",
         "selectedIconPath": "image/addNotes.png"
       },

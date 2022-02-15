@@ -1,11 +1,9 @@
 <!--pages/userLogin/userLogin.wxml-->
-<view>
-  <view class="loginContainer">
-    <l-input label="账号" width="700" placeholder="请输入用户名/手机号"  />
-    <l-input label="密码" width="700" placeholder="请输入密码"  />
-    <l-button shape="semicircle" bg-color="#FE9A5E" style="position: relative; top: 20px;" width="700" height="90">登录</l-button>
-    <text bindtap="onRegisterNavigate" class="registers">注册账号</text>
-    <text bindtap="onForgetPWNavigate" class="registers1">忘记密码</text>
-  </view>
+<view class="loginContainer">
+  <l-input label="账号"  value="{{UNOrTel}}" width="700" placeholder="请输入用户名/手机号" bind:linblur="changeUNOrTel" rules="{{UNOrTelRule}}"  />
+  <l-input label="密码" value="{{password}}" type="password" width="700" placeholder="请输入密码" bind:linblur="changePW" rules="{{PWRule}}"  />
+  <l-button bind:lintap="onClickLogin" shape="semicircle" bg-color="#FE9A5E" style="position: relative; top: 20px;" width="700" height="90">登录</l-button>
+  <view></view>
+  <text bindtap="onRegisterNavigate" class="registers">注册账号</text>
+  <text bindtap="onForgetPWNavigate" class="registers1">忘记密码</text>
 </view>
-

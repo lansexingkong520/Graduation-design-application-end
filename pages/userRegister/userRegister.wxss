@@ -1,1 +1,7 @@
 /* pages/userRegister/userRegister.wxss */
+.registerContainer{
+  width: 300px;
+  position: relative;
+  left: 10px;
+  top: 60px;
+}

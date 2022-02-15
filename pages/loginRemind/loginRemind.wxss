@@ -1,4 +1,4 @@
-/* pages/message/message.wxss */
+/* pages/loginRemind/loginRemind.wxss */
 .notLoginRemind {
   width: 250px;
   margin: auto;

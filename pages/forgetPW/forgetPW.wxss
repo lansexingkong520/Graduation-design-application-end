@@ -1,1 +1,7 @@
 /* pages/forgetPW/forgetPW.wxss */
+.forgetPWContainer{
+  width: 300px;
+  position: relative;
+  left: 10px;
+  top: 60px;
+}

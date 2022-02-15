@@ -1,32 +1,31 @@
-// pages/message/message.js
+// pages/loginRemind/loginRemind.js
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    // 这是未登录的标记
-    notLogin: false,
+
   },
+
   loginToJump: function () {
+    let jumpItem = wx.getStorageSync('loginToJump')
+    let number = jumpItem.num
+    jumpItem = {
+      num: number,
+      text: "登录页面"
+    }
+    wx.setStorageSync('loginToJump', jumpItem)
     wx.switchTab({
       url: '../personal/personal',
     })
-  },
-  // 监听tabBar事件
-  onTabItemTap: function (item) {
-    wx.setStorageSync('beforeTabBar', item)
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    var that = this
-    let isUserInfo = wx.getStorageSync('userInfo')
-    if (isUserInfo === null || isUserInfo === "") {
-      that.data.notLogin = true
-    }
+
   },
 
   /**

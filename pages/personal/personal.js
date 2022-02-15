@@ -8,6 +8,11 @@ Page({
 
   },
 
+  // 监听tabBar事件
+  onTabItemTap: function (item) {
+    wx.setStorageSync('beforeTabBar', item)
+  },
+
   // 点击登录页面
   onClickNavigateLogin: function (event) {
     //页面跳转  ---页面跳转以后 需要展示登录页面

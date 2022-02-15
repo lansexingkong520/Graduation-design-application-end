@@ -23,6 +23,16 @@ Page({
         canIUseGetUserProfile: true
       })
     }
+    let beforeTabBar = {
+      index: 0,
+      pagePath: "pages/index/index",
+      text: "首页"
+    }
+    wx.setStorageSync('beforeTabBar', beforeTabBar)
+  },
+  // 监听tabBar事件
+  onTabItemTap: function (item) {
+    wx.setStorageSync('beforeTabBar', item)
   },
   getUserProfile(e) {
     // 推荐使用wx.getUserProfile获取用户信息，开发者每次通过该接口获取用户个人信息均需用户确认，开发者妥善保管用户快速填写的头像昵称，避免重复弹窗
