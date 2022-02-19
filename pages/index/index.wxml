@@ -1,6 +1,30 @@
 <!--index.wxml-->
-<view class="container">
-  <view class="userinfo">
+<view>
+  <view>
+    <l-segment active-key="{{segmentActiveKey[segmentActiveKeyTag]}}" class="segmentTab" width="300" has-line="{{true}}" bind:linchange="changeTabs">
+        <l-segment-item tab="关注" key="one" />
+        <l-segment-item tab="推荐" key="two" />
+    </l-segment> 
+    <image class="searchClass" src="/image/search.png"></image>
+  </view>
+  <!-- 这一块做推荐的内容，与关注的进行分开，是否分成组件还是看后期吧 -->
+  <block wx:if="{{segmentActiveKeyTag === 1}}">
+    <view class="indexWarp">
+      <view class="recommend-wrap">
+        <view class="recommendList">
+          <view class="item" wx:for="{{recommends}}" wx:key="item">
+            <image mode="aspectFit" class="image" src="{{item.picURL}}" wx:if="{{item.pics !== null}}"></image>
+            <view style="padding: 10rpx 4px;" class="title">{{item.title}}</view>
+            <view style="padding: 8rpx 4px 0 4px;">
+              <image class="authorImg" src="{{item.picURL}}"></image>
+              <text class="author">{{item.puid}}</text>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </block>
+  <!-- <view class="userinfo">
     <block wx:if="{{canIUseOpenData}}">
       <view class="userinfo-avatar" bindtap="bindViewTap">
         <open-data type="userAvatarUrl"></open-data>
@@ -16,8 +40,5 @@
       <image bindtap="bindViewTap" class="userinfo-avatar" src="{{userInfo.avatarUrl}}" mode="cover"></image>
       <text class="userinfo-nickname">{{userInfo.nickName}}</text>
     </block>
-  </view>
-  <view class="usermotto">
-    <text class="user-motto">{{motto}}</text>
-  </view>
+  </view> -->
 </view>

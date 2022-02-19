@@ -5,7 +5,16 @@ Page({
    * 页面的初始数据
    */
   data: {
-
+    // 标记是否登录
+    isLogin: false,
+    // 用户信息
+    userInfo:{
+      // 用户名
+      name: "",
+      // 用户编号
+      id: 0,
+      picURL: ""
+    }
   },
 
   // 监听tabBar事件
@@ -41,7 +50,22 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    var that = this
+    let isUserInfo = wx.getStorageSync('userInfo')
+    if (isUserInfo === null || isUserInfo === "") {
+      that.setData({
+        isLogin: true
+      }) 
+    } else {
+      that.setData({
+        isLogin: false,
+        userInfo: {
+          name: isUserInfo.username,
+          id: isUserInfo.uid,
+          picURL: isUserInfo.picURL
+        }
+      }) 
+    }
   },
 
   /**

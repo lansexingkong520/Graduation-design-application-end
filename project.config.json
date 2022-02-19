@@ -47,7 +47,7 @@
     "useCompilerPlugins": false
   },
   "compileType": "miniprogram",
-  "libVersion": "2.19.6",
+  "libVersion": "2.22.0",
   "appid": "wx6be01bc7f743c423",
   "projectname": "gourmet",
   "debugOptions": {

@@ -1,5 +1,5 @@
 /**index.wxss**/
-.userinfo {
+/* .userinfo {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -16,4 +16,65 @@
 
 .usermotto {
   margin-top: 200px;
+} */
+.segmentTab {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  box-sizing: border-box;
+}
+
+.searchClass {
+  width: 60rpx;
+  height: 60rpx;
+  position: absolute;
+  top: 5px;
+  right: 5px;
+}
+
+.indexWarp {
+  width: 100%;
+  padding: 0 20rpx;
+  box-sizing: border-box;
+}
+
+.indexWarp .recommend-wrap {
+  font-size: 30rpx;
+  color: #33373E;
+  margin-bottom: 10rpx;
+}
+/* 让弹性盒元素在必要的时候拆行 */
+.indexWarp .recommend-wrap .recommendList {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.indexWarp .recommend-wrap .recommendList .item {
+  width: 320rpx;
+  /* height: 90px; */
+  margin: 8px 16rpx;
+  position: relative;
+  border: solid 1px #eeeeee;
+  border-radius: 4px;
+  box-shadow: #eeeeee 1px 1px;
+}
+.indexWarp .recommend-wrap .recommendList .item .image {
+  width: 100%;
+}
+.indexWarp .recommend-wrap .recommendList .item .title {
+  font-size: 14px;
+  font-weight: bold;
+}
+.indexWarp .recommend-wrap .recommendList .item .authorImg {
+  width: 25rpx;
+  height: 25rpx;
+  border-radius: 50%;
+  border: solid 1px #33373E;
+}
+.indexWarp .recommend-wrap .recommendList .item .author {
+  position: relative;
+  top: -1px;
+  left: 4px;
 }

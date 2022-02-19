@@ -1,6 +1,11 @@
 <!--pages/message/message.wxml-->
-<view wx:if="notLogin">
+<view wx:if="{{notLogin}}">
   <view class="notLoginRemind">您还未登录，没有此操作的权限，请先
     <text class="loginJump" bindtap="loginToJump">登录</text>
+  </view>
+</view>
+
+<view wx:if="{{!notLogin}}">
+  <view class="notLoginRemind">您已登录，敬请期待
   </view>
 </view>

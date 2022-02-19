@@ -25,3 +25,17 @@
   left: -50px;
   top: -8px
 }
+.uname{
+  color: #ffffff;
+  font-size: 16px;
+  position: relative;
+  top: -50px;
+  left: 64px;
+}
+.uid{
+  color: #eeeeee;
+  font-size: 12px;
+  position: relative;
+  left: 64px;
+  top: -48px
+}

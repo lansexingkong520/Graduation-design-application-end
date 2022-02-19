@@ -22,11 +22,6 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    var that = this
-    let isUserInfo = wx.getStorageSync('userInfo')
-    if (isUserInfo === null || isUserInfo === "") {
-      that.data.notLogin = true
-    }
   },
 
   /**
@@ -40,7 +35,17 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    var that = this
+    let isUserInfo = wx.getStorageSync('userInfo')
+    if (isUserInfo === null || isUserInfo === "") {
+      that.setData({
+        notLogin: true
+      }) 
+    } else {
+      that.setData({
+        notLogin: false
+      })
+    }
   },
 
   /**
