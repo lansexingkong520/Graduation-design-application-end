@@ -1,0 +1,19 @@
+<!--pages/addAddress/addAddress.wxml-->
+<view>
+  <view>
+    <input class="searchInput" bindinput="getsuggest" value="{{searchAdd}}" placeholder="搜索地点"/>
+    <view class="clearWord" bindtap="clearInput">取消</view>
+  </view>
+  <!--关键词输入提示列表渲染-->
+  <view wx:for="{{suggestion}}" wx:key="index">
+      <!--绑定回填事件-->
+      <view>
+        <!--根据需求渲染相应数据-->
+        <!--渲染地址title-->
+        <view style="padding: 2px 10px;" bindtap="backfill" id="{{index}}">{{item.title}}</view>
+        <!--渲染详细地址-->
+        <view style="font-size:12px;color:#666;padding: 0px 10px;">{{item.addr}}</view>
+        <view style="padding: 0 5px;border-top: solid 1px #eeeeee;"></view>
+      </view>
+  </view>
+</view>

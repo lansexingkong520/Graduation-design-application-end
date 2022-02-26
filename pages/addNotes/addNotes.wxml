@@ -18,7 +18,7 @@
     <view class="img-wrap">
       <view class="imglist">
         <view class="item" wx:for="{{imgs}}" wx:key="item">
-          <image src="{{item}}"></image>
+          <image bindload="imageLoad" src="{{item}}"></image>
           <view class='delete' bindtap='deleteImg' data-index="{{index}}">
             <image src="/image/delete.png"></image>
           </view>
@@ -32,5 +32,15 @@
   </view>
   <input bindinput="bindKeyInputTitle" style="margin: 10px;" placeholder-style="font-weight: bold" placeholder="填写标题更容易被大家发现哦~"/>
   <view style="border-bottom: #8a8a8a 1px solid; margin: 10px"></view>
-  <textarea bindinput="bindKeyInputContent" maxlength="250" style="margin: 0 10px;" placeholder="美味要赶紧记录下来~"></textarea>
+  <textarea bindinput="bindKeyInputContent" maxlength="250" style="margin: 0 10px 5px 10px;" placeholder="美味要赶紧记录下来~"></textarea>
+  <view style="height: 3px;background-color: #eeeeee;"></view>
+  <view class="associatedAddress" bindtap="onAddAddress">
+    <text style="font-weight: bold;position: relative;top: 8px;padding-left: 8px;">添加地点</text>
+    <image class="addressImg" src="/image/rightArrow.png"></image>
+  </view>
+  <view class="placeCard" wx:if="{{place !== null && place !== ''}}">
+    <view style="padding: 2px 5px;">{{place}}</view>
+    <view style="padding: 1px 5px;">{{address}}</view>
+    <image bindtap="deletePlace" class="deleteImg" src="/image/delete.png"></image>
+  </view>
 </view>

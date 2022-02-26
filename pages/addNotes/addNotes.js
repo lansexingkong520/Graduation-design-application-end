@@ -9,6 +9,10 @@ Page({
     imgs: [],
     // 图片上传后得到的图片id
     imgsID: [],
+    // 图片的宽度对应加进去
+    imgWidth: [],
+    //  图片的高度对应加进去
+    imgHeight: [],
     // 图片数量
     count: 0,
     // 图片最大数量
@@ -19,8 +23,14 @@ Page({
     content: "",
     // 笔记话题
     topic: null,
-    // 笔记附加地点
-    place: null
+    // 笔记附加地点名字
+    place: null,
+    // 笔记附加地点地址
+    address: null,
+    // 地点的纬度
+    latitude: null,
+    // 地点的经度
+    longitude: null
   },
   // 上传图片
   // 这是本地选中图片
@@ -86,16 +96,30 @@ Page({
             if (i == e.currentTarget.dataset.index){
               that.data.imgs.splice(i, 1)
               that.data.imgsID.splice(i, 1)
+              that.data.imgWidth.splice(i, 1)
+              that.data.imgHeight.splice(i, 1)
             }
           }
           that.setData({
             imgs: that.data.imgs,
-            imgsID: that.data.imgsID
+            imgsID: that.data.imgsID,
+            imgWidth: that.data.imgWidth,
+            imgHeight: that.data.imgHeight
           })
         } else if (res.cancel) {
           console.log("用户点击取消")
         }
       }
+    })
+  },
+  // 在这里获取图片的高度和宽度并存入数据库（帖子查看需要）
+  imageLoad: function (e) {
+    var that = this
+    that.data.imgWidth.push(e.detail.width)
+    that.data.imgHeight.push(e.detail.height)
+    that.setData({
+      imgWidth: that.data.imgWidth,
+      imgHeight: that.data.imgHeight
     })
   },
   // 获取笔记标题
@@ -109,6 +133,23 @@ Page({
     this.setData({
       content: e.detail.value
     })
+  },
+  // 笔记添加地点
+  onAddAddress: function () {
+    wx.navigateTo({
+      url: '../addAddress/addAddress',
+    })
+  },
+  // 笔记取消地点
+  deletePlace: function () {
+    var that = this
+    that.setData({
+      place: '',
+      address: '',
+      latitude: null,
+      longitude: null
+    })
+    wx.removeStorageSync('addLocation')
   },
   // 取消发布笔记，撤回
   cancelRelease: function () {
@@ -129,7 +170,7 @@ Page({
       return
     }
     let puid = wx.getStorageSync('userInfo').uid
-    // 向后台发送登录请求 现在的请求还不用带上cookie，但是要将cookie保存下来
+    // 向后台发送添加请求
     wx.request({
       url: 'http://localhost:8888/tbPost/addPost',
       data: {
@@ -137,8 +178,13 @@ Page({
         content: that.data.content,
         topic: that.data.topic,
         place: that.data.place,
+        address: that.data.address,
+        latitude: that.data.latitude,
+        longitude: that.data.longitude,
         puid: puid,
-        pics: that.data.imgsID
+        pics: that.data.imgsID,
+        width: that.data.imgWidth,
+        height: that.data.imgHeight
       },
       method: 'POST',
       success: function (res) {
@@ -183,7 +229,18 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    // 先做有没有的判断，有就写上，没有就过
+    // wx.setStorageSync('addLocation', this.data.suggestion[id])
+    var that = this
+    var location = wx.getStorageSync('addLocation')
+    if (location !== null && location !== "") {
+      that.setData({
+        place: location.title,
+        address: location.addr,
+        latitude: location.latitude,
+        longitude: location.longitude
+      })
+    }
   },
 
   /**
@@ -197,7 +254,7 @@ Page({
    * 生命周期函数--监听页面卸载
    */
   onUnload: function () {
-
+    wx.removeStorageSync('addLocation')
   },
 
   /**

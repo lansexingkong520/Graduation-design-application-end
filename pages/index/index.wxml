@@ -12,12 +12,25 @@
     <view class="indexWarp">
       <view class="recommend-wrap">
         <view class="recommendList">
-          <view class="item" wx:for="{{recommends}}" wx:key="item">
-            <image mode="aspectFit" class="image" src="{{item.picURL}}" wx:if="{{item.pics !== null}}"></image>
+          <view bindtap="viewDetails" data-item="{{item}}" class="item" wx:for="{{recommendLeft}}" wx:key="item">
+            <image mode="widthFix" class="image" src="{{item.postPicture[0].url}}" wx:if="{{item.postPicture.length !== 0}}"></image>
             <view style="padding: 10rpx 4px;" class="title">{{item.title}}</view>
-            <view style="padding: 8rpx 4px 0 4px;">
-              <image class="authorImg" src="{{item.picURL}}"></image>
-              <text class="author">{{item.puid}}</text>
+            <view style="padding: 8rpx 4px;">
+              <image class="authorImg" src="{{item.tbUser.picURL}}"></image>
+              <text class="author">{{item.tbUser.username}}</text>
+            </view>
+          </view>
+        </view>
+      </view>
+
+      <view class="recommend-wrap">
+        <view class="recommendList">
+          <view bindtap="viewDetails" data-item="{{item}}" class="item" wx:for="{{recommendRight}}" wx:key="item">
+            <image mode="widthFix" class="image" src="{{item.postPicture[0].url}}" wx:if="{{item.postPicture.length !== 0}}"></image>
+            <view style="padding: 10rpx 4px;" class="title">{{item.title}}</view>
+            <view style="padding: 8rpx 4px;">
+              <image class="authorImg" src="{{item.tbUser.picURL}}"></image>
+              <text class="author">{{item.tbUser.username}}</text>
             </view>
           </view>
         </view>

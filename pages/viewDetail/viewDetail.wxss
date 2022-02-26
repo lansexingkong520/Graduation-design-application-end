@@ -1,0 +1,97 @@
+/* pages/viewDetail/viewDetail.wxss */
+.userColumn {
+  width: 100%;
+  height: 45px;
+}
+
+.userColumn .userColumnImg {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+.userColumn .userColumnUsername {
+  position: relative;
+  top: -34px;
+  left: 50px;
+}
+
+.swiperImg {
+  display:flex;
+  justify-content: center;        
+  align-items:center; 
+  background-color: #eeeeeeA8;
+}
+.side-img {
+  width: 320px;
+}
+
+.store-page {
+  width: 100vw;
+  height: 100vh;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.wordage {
+  padding: 10px;
+}
+.wordageTitle {
+  font-weight: bold;
+}
+.wordageContent {
+  font-size: 14px;
+  padding-top: 5px;
+}
+.placeCard {
+  background-color: #eeeeeeA8;
+  border-radius: 5px;
+  margin: 8px 0;
+  position: relative;
+}
+.mapImg {
+  width: 40px;
+  height: 40px;
+}
+.placeCardtitle {
+  padding: 2px 5px;
+  font-size: 36rpx;
+  font-weight: bold;
+  position: absolute;
+  top: 0;
+  left: 40px
+}
+.placeCardaddress {
+  padding: 1px 5px 3px 5px;
+  font-size: 32rpx;
+  color: #8a8a8a;
+  position: absolute;
+  top: 24px;
+  left: 40px;
+}
+.releaseTime {
+  font-size: 32rpx;
+  color: #8a8a8a;
+  padding: 5px 0;
+}
+
+.commentColumn {
+  width: 100%;
+  height: 40px;
+  position: fixed;
+  bottom: 0;
+  background-color: #ffffff;
+  border-top: solid 1px #eeeeee;
+  box-shadow: #f0f0f0 0px -1px;
+}  
+
+.commentInput {
+  width: 40%;
+  height: 25px;
+  margin: 6px 5px;
+  padding: 0 6px;
+  background-color: #fefefe;
+  border-radius: 30px;
+  border: 1px solid #eeeeee;
+  font-size: 12px;
+}

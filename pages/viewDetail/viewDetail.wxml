@@ -1,0 +1,38 @@
+<!--pages/viewDetail/viewDetail.wxml-->
+<view class="store-page">
+  <view style="padding: 5px 0 0 5px;" class="userColumn">
+    <image class="userColumnImg" src="{{postBean.tbUser.picURL}}"></image>
+    <view class="userColumnUsername">{{postBean.tbUser.username}}</view>
+  </view>
+  <view wx:if="{{postBean.postPicture.length !== 0}}">
+    <swiper duration="{{duration}}" style="height: {{maxImgHeight}}px;">
+      <block wx:for="{{imgUrls}}" wx:key="key" wx:for-index="index">
+        <swiper-item class="swiperImg">
+          <image mode="widthFix" src="{{item.url}}" class="side-img"></image>
+        </swiper-item>
+      </block>
+    </swiper>
+  </view>
+  <!-- 这里写标题、内容和评论的view -->
+  <view class="wordage">
+    <view class="wordageTitle">{{postBean.title}}</view>
+    <view class="wordageContent">{{postBean.content}}</view>
+    <view bindtap="jumpToRoutePlan" class="placeCard" wx:if="{{postBean.place !== null && postBean.place !== ''}}">
+      <image class="mapImg" src="/image/map1_icon.png"></image>
+      <view class="placeCardtitle">{{postBean.place}}</view>
+      <view class="placeCardaddress">{{postBean.address}}</view>
+    </view>
+    <view class="releaseTime">发布于 {{releaseTime}}</view>
+    <view style="border-top: 1px solid #eeeeee;padding-bottom: 5px;"></view>
+    <view style="font-weight: bold;font-size: 18px;">评论</view>
+    <view style="height: 200px; width: 300px; position: relative;" wx:if="{{place !== null && place !== ''}}">
+      <image style="width: 180px;height: 150px;position: absolute;left: 20%;top: 20%;" src="/image/noComments.png"></image>
+    </view>
+    
+  </view>
+  <view style="height: 50px;"></view>
+  <!-- 这里写评论栏和收藏？ -->
+  <view class="commentColumn">
+    <input class="commentInput" placeholder="说点什么吧" />
+  </view>
+</view>
