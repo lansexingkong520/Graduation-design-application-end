@@ -24,15 +24,39 @@
     </view>
     <view class="releaseTime">发布于 {{releaseTime}}</view>
     <view style="border-top: 1px solid #eeeeee;padding-bottom: 5px;"></view>
-    <view style="font-weight: bold;font-size: 18px;">评论</view>
-    <view style="height: 200px; width: 300px; position: relative;" wx:if="{{place !== null && place !== ''}}">
+    <view id="comments" style="font-weight: bold;font-size: 18px;">评论</view>
+    <block wx:if="{{commentBeanList.length !== 0}}">
+      <view bindtap="changeReply" class="commentItem" data-item="{{item}}" wx:for="{{commentBeanList}}" wx:key="item" data-index="index">
+        <image class="commentItemHead" src="{{item.tbUser.picURL}}"></image>
+        <view class="commentItemWord">
+          <view style="font-size: 32rpx;color: #8a8a8a;">{{item.tbUser.username}}</view>
+          <view style="font-size: 28rpx;color: #8a8a8a;">{{item.time}}</view>
+          <view style="font-size: 34rpx;">{{item.message}}</view>
+          <block wx:if="{{item.commentReplyBeanList.length !== 0}}">
+            <view catchtap="changeReply" class="replyItem" data-item="{{item}}" wx:for="{{item.commentReplyBeanList}}" wx:key="item" data-index="index">
+              <image class="replyItemHead" src="{{item.tbUser.picURL}}"></image>
+              <view class="replyItemWord">
+                <view style="font-size: 32rpx;color: #8a8a8a;">{{item.tbUser.username}} <text wx:if="{{item.ccrusername !== null}}">回复 {{item.ccrusername}}</text></view>
+                <view style="font-size: 28rpx;color: #8a8a8a;">{{item.replytime}}</view>
+                <view style="font-size: 34rpx;">{{item.content}}</view>
+              </view>
+            </view>
+          </block>
+          <view data-item="{{item}}" catchtap="queryMoreReply" style="font-size: 32rpx;color: #A0D0FE;" wx:if="{{item.replyCount > 0}}">展开更多回复</view>
+          <view wx:if="{{index !== commentBeanList.length-1}}" style="border-bottom: 1px solid #eeeeee;"></view>
+        </view>
+      </view>
+    </block>
+    <view style="height: 200px; width: 300px; position: relative;" wx:if="{{commentBeanList.length === 0}}">
       <image style="width: 180px;height: 150px;position: absolute;left: 20%;top: 20%;" src="/image/noComments.png"></image>
     </view>
-    
   </view>
   <view style="height: 50px;"></view>
   <!-- 这里写评论栏和收藏？ -->
   <view class="commentColumn">
-    <input class="commentInput" placeholder="说点什么吧" />
+    <input focus="{{replyFoucs == true}}" bindconfirm="sendComment" bindinput="getInputComment" value="{{inputComment}}" bindblur="replyOutofFocus" class="commentInput" placeholder="{{placeholder}}" />
+    <!-- <text class="send" bindtap="sendComment">发 送</text> -->
+    <image class="like" src="/image/like.png"></image>
+    <image bindtap="scrollToComment" class="comment" src="/image/comment.png"></image>
   </view>
 </view>

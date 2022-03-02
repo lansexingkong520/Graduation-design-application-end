@@ -26,12 +26,12 @@
   width: 320px;
 }
 
-.store-page {
+/* .store-page {
   width: 100vw;
   height: 100vh;
   overflow-x: hidden;
   overflow-y: auto;
-}
+} */
 
 .wordage {
   padding: 10px;
@@ -74,7 +74,37 @@
   color: #8a8a8a;
   padding: 5px 0;
 }
-
+.commentItem {
+  position: relative;
+  height: 100%;
+  margin: 4px 0 8px 0;
+}
+.commentItemHead {
+  width: 70rpx;
+  height: 70rpx;
+  border-radius: 50%;
+  position: absolute;
+}
+.commentItemWord {
+  width: 88%;
+  position: relative;
+  left: 12%;
+}
+.replyItem {
+  margin: 5px 0;
+  position: relative;
+}
+.replyItemHead {
+  width: 60rpx;
+  height: 60rpx;
+  border-radius: 50%;
+  position: absolute;
+}
+.replyItemWord {
+  position: relative;
+  left: 12%;
+  width: 88%;
+}
 .commentColumn {
   width: 100%;
   height: 40px;
@@ -86,7 +116,7 @@
 }  
 
 .commentInput {
-  width: 40%;
+  width: 50%;
   height: 25px;
   margin: 6px 5px;
   padding: 0 6px;
@@ -94,4 +124,24 @@
   border-radius: 30px;
   border: 1px solid #eeeeee;
   font-size: 12px;
+}
+.send {
+  width: 15%;
+  position: absolute;
+  top: 9px;
+  left: 60%;
+}
+.like {
+  width: 50rpx;
+  height: 50rpx;
+  position: absolute;
+  top: 9px;
+  left: 65%;
+}
+.comment {
+  width: 50rpx;
+  height: 50rpx;
+  position: absolute;
+  top: 9px;
+  left: 82%;
 }
