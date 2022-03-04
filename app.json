@@ -12,8 +12,7 @@
     "pages/addNotes/addTransitionPage",
     "pages/loginRemind/loginRemind",
     "pages/viewDetail/viewDetail",
-    "pages/addAddress/addAddress",
-    "pages/routePlan/routePlan"
+    "pages/addAddress/addAddress"
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -56,10 +55,10 @@
     "selectedColor": "#FE9A5E"
   },
   "plugins": {
-      "routePlan": {
+    "routePlan": {
       "version": "1.0.19",
       "provider": "wx50b5593e81dd937a"
-      }
+    }
   },
   "permission": {
     "scope.userLocation": {

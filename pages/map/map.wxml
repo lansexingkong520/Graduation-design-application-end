@@ -1,4 +1,36 @@
 <!--pages/map/map.wxml-->
+
 <view class="mapView">
-  <map id="myMap" class="maMap" longitude="{{longitude}}" latitude="{{latitude}}" markers="{{markers}}" covers="{{covers}}" show-location />
+  <map id="myMap" 
+    class="maMap" 
+    bindmarkertap="getMarkerInfo" 
+    bindregionchange="regionchange"
+    longitude="{{longitude}}" 
+    latitude="{{latitude}}" 
+    markers="{{markers}}" 
+    scale="{{scale}}" 
+    show-location 
+    show-scale>
+    <cover-view catchtap="getSearchPlace" class="csearch" wx:if="{{searchPlace === null}}">
+      <cover-image class="searchimg" src="/image/search.png"></cover-image>
+      <cover-view style="font-size: 30rpx;position: relative;left: 50%;top:-8px;">搜索</cover-view>
+    </cover-view>
+    <cover-view catchtap="getSearchPlace" class="csearched" wx:if="{{searchPlace !== null}}">
+      <cover-view class="searchedAdd">{{searchPlace.title}}</cover-view>
+      <cover-image catchtap="getSearchPlace" class="searchedDelimg" src="/image/delete.png"></cover-image>
+      <cover-view catchtap="searchCancel" style="font-size: 30rpx;position: absolute;right: 4%;top: 25%;color: #8a8a8a;">| 取消</cover-view>
+    </cover-view>
+    <cover-view catchtap="returnOriginalLocation" class="cview">
+      <cover-image class="cimg" src="/image/myPosition.png"></cover-image>
+      <cover-view style="font-size: 22rpx;position: relative;left: 25%;top:12%;">定位</cover-view>
+    </cover-view>
+  </map>
+
+  <view class="gourmetCards" wx:if="{{specificMark !== null}}">
+    <view class="cardTitle">{{specificMark.title}}</view>
+    <view class="cardDistance">距离{{specificMark.distance}}</view>
+    <view class="cardPlan" catchtap="getRoute">到这儿去</view>
+  </view>
 </view>
+  
+

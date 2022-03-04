@@ -149,7 +149,7 @@ Page({
       latitude: null,
       longitude: null
     })
-    wx.removeStorageSync('addLocation')
+    // wx.removeStorageSync('addLocation')
   },
   // 取消发布笔记，撤回
   cancelRelease: function () {
@@ -240,6 +240,8 @@ Page({
         latitude: location.latitude,
         longitude: location.longitude
       })
+      // 这里直接进行地点Storage的销毁
+      wx.removeStorageSync('addLocation')
     }
   },
 
@@ -254,7 +256,7 @@ Page({
    * 生命周期函数--监听页面卸载
    */
   onUnload: function () {
-    wx.removeStorageSync('addLocation')
+    
   },
 
   /**
