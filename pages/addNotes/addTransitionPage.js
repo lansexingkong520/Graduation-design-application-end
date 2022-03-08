@@ -1,4 +1,6 @@
 // pages/addNotes/addTransitionPage.js
+// 获取应用实例
+const app = getApp()
 Page({
 
   /**
@@ -30,8 +32,8 @@ Page({
    */
   onShow: function () {
     var that = this
-    let isUserInfo = wx.getStorageSync('userInfo')
-    if (isUserInfo !== null && isUserInfo !== "") {
+    // let isUserInfo = wx.getStorageSync('userInfo')
+    if (app.globalData.userInfo !== null) {
       // 这一块做已登录的发布跳转
       let isReleaseToJump = wx.getStorageSync('releaseToJump')
       if (isReleaseToJump.text === "已发布") {

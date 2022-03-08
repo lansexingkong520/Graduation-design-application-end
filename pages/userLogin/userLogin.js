@@ -51,7 +51,7 @@ Page({
           })
         } else {
           wx.setStorageSync('userInfo', res.data.data)
-          app.globalData.header.Cookie = 'JSESSIONID=' + res.data.data.sessionid;
+          app.globalData.userInfo = res.data.data
           // 登录成功跳转首页
           wx.switchTab({
             url: '/pages/index/index'

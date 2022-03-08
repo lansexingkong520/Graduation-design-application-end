@@ -1,22 +1,4 @@
 /**index.wxss**/
-/* .userinfo {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  color: #aaa;
-}
-
-.userinfo-avatar {
-  overflow: hidden;
-  width: 128rpx;
-  height: 128rpx;
-  margin: 20rpx;
-  border-radius: 50%;
-}
-
-.usermotto {
-  margin-top: 200px;
-} */
 .segmentTab {
   height: 100%;
   display: flex;
@@ -33,50 +15,6 @@
   top: 5px;
   right: 5px;
 }
-
-/* 这下面做的是未分列的css */
-/* .indexWarp {
-  width: 100%;
-  padding: 0 20rpx;
-  box-sizing: border-box;
-}
-.indexWarp .recommend-wrap {
-  font-size: 30rpx;
-  color: #33373E;
-  margin-bottom: 10rpx;
-}
-/* 让弹性盒元素在必要的时候拆行 */
-/* .indexWarp .recommend-wrap .recommendList {
-  display: flex;
-  flex-wrap: wrap;
-}
-.indexWarp .recommend-wrap .recommendList .item {
-  width: 320rpx;
-  /* height: 90px; */
-  /* margin: 8px 16rpx;
-  position: relative;
-  border: solid 1px #eeeeee;
-  border-radius: 4px;
-  box-shadow: #eeeeee 1px 1px;
-}
-.indexWarp .recommend-wrap .recommendList .item .image {
-  width: 100%;
-}
-.indexWarp .recommend-wrap .recommendList .item .title {
-  font-size: 14px;
-  font-weight: bold;
-}
-.indexWarp .recommend-wrap .recommendList .item .authorImg {
-  width: 25rpx;
-  height: 25rpx;
-  border-radius: 50%;
-  border: solid 1px #33373E;
-}
-.indexWarp .recommend-wrap .recommendList .item .author {
-  position: relative;
-  top: -1px;
-  left: 4px;
-} */
 
 .indexWarp {
   width: 100%;
@@ -114,10 +52,67 @@
   width: 25rpx;
   height: 25rpx;
   border-radius: 50%;
-  border: solid 1px #33373E;
+  border: solid 1px #eeeeee;
 }
 .indexWarp .recommend-wrap .recommendList .item .author {
   position: relative;
   top: -1px;
   left: 4px;
+}
+
+.attention-wrap {
+  font-size: 14px;
+  color: #33373E;
+  margin-bottom: 10rpx;
+}
+.attention-wrap .attentionList {
+  flex-direction: column;
+  display: flex;
+}
+.attention-wrap .attentionList .item {
+  width: 288px;
+  margin: 8px 16rpx;
+  position: relative;
+  border: solid 1px #eeeeee;
+  border-radius: 4px;
+  box-shadow: #eeeeee 1px 1px;
+}
+.attention-wrap .attentionList .item .authorImg {
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  border: solid 1px #eeeeeeA8;
+}
+.attention-wrap .attentionList .item .author {
+  font-size: 14px;
+  font-weight: bold;
+  position: relative;
+  top: -7px;
+  left: 4px;
+}
+.attention-wrap .attentionList .item .swiperImg {
+  display:flex;
+  justify-content: center;        
+  align-items:center; 
+  background-color: #eeeeeeA8;
+}
+.attention-wrap .attentionList .item .onDisplay {
+  display: -webkit-box;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-break: break-all;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 5;  
+}
+
+.notLoginRemind {
+  width: 250px;
+  margin: auto;
+  text-align: center;
+  margin-top: 50%;
+  color: #8a8a8a;
+}
+.loginJump {
+  font-size: 17px;
+  color: #295b9b;
 }

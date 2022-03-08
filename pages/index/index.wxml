@@ -37,21 +37,48 @@
       </view>
     </view>
   </block>
-  <!-- <view class="userinfo">
-    <block wx:if="{{canIUseOpenData}}">
-      <view class="userinfo-avatar" bindtap="bindViewTap">
-        <open-data type="userAvatarUrl"></open-data>
+  <block wx:if="{{segmentActiveKeyTag === 0 && userInfo !== null && attentions.length !== 0}}">
+    <view class="indexWarp">
+      <view class="attention-wrap">
+        <view class="attentionList">
+          <view bindtap="viewDetails" data-item="{{item}}" class="item" wx:for="{{attentions}}" wx:key="item">
+            <view style="padding: 8rpx 4px;">
+              <image class="authorImg" src="{{item.tbUser.picURL}}"></image>
+              <text class="author">{{item.tbUser.username}}</text>
+            </view>
+            <view wx:if="{{item.postPicture.length !== 0}}">
+              <swiper duration="{{duration}}" style="height: {{item.maxHeight}}px;">
+                <block wx:for="{{item.postPicture}}" wx:key="key" wx:for-index="index">
+                  <swiper-item class="swiperImg">
+                    <image mode="widthFix" src="{{item.url}}"></image>
+                  </swiper-item>
+                </block>
+              </swiper>
+            </view>
+            <view style="padding: 10rpx 4px;">
+              <view>{{item.title}}</view>
+              <view class="onDisplay" wx:if="{{item.isExpand === true}}">{{item.content}}</view>
+              <view catchtap="changeExpand" data-item="{{item}}" wx:if="{{item.isExpand === false}}" style="font-weight: bold;font-style: 13px;">展开 ↓</view>
+              <view wx:if="{{item.place !== null}}">
+                <image style="width: 20px;height: 20px;margin-top: 2px;" src="/image/map1_icon.png"></image>
+                <text style="position: relative;top: -4px;">{{item.place}}</text>
+              </view>            
+              <view catchtap="viewDetails" data-item="{{item}}" wx:if="{{item.isExpand === true}}" style="font-weight: bold;font-style: 13px;">查看详情 ＞</view>
+              <view style="font-size: 28rpx;color: #8a8a8a;">发布于{{item.replytime}}</view>
+            </view>
+          </view>
+        </view>
       </view>
-      <open-data type="userNickName"></open-data>
-    </block>
-    <block wx:elif="{{!hasUserInfo}}">
-      <button wx:if="{{canIUseGetUserProfile}}" bindtap="getUserProfile"> 获取头像昵称 </button>
-      <button wx:elif="{{canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 获取头像昵称 </button>
-      <view wx:else> 请使用1.4.4及以上版本基础库 </view>
-    </block>
-    <block wx:else>
-      <image bindtap="bindViewTap" class="userinfo-avatar" src="{{userInfo.avatarUrl}}" mode="cover"></image>
-      <text class="userinfo-nickname">{{userInfo.nickName}}</text>
-    </block>
-  </view> -->
+    </view>
+  </block>
+  <block wx:if="{{segmentActiveKeyTag === 0 && userInfo !== null && attentions.length === 0}}">
+    <view style="height: 400px;">
+      <image style="width: 200px;position: relative;left: 18%;top: 20%;" mode="widthFix" src="/image/noData.png" class=""></image>
+    </view>
+  </block>
+  <block  wx:if="{{segmentActiveKeyTag === 0 && userInfo === null}}">
+    <view class="notLoginRemind">您还未登录，没有此操作的权限，请先
+      <text class="loginJump" bindtap="loginToJump">登录</text>
+    </view>
+  </block>
 </view>

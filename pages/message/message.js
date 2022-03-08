@@ -1,4 +1,6 @@
 // pages/message/message.js
+// 获取应用实例
+const app = getApp()
 Page({
 
   /**
@@ -8,6 +10,7 @@ Page({
     // 这是未登录的标记
     notLogin: false,
   },
+  // 未登录时跳转到个人中心界面去登录
   loginToJump: function () {
     wx.switchTab({
       url: '../personal/personal',
@@ -36,15 +39,15 @@ Page({
    */
   onShow: function () {
     var that = this
-    let isUserInfo = wx.getStorageSync('userInfo')
-    if (isUserInfo === null || isUserInfo === "") {
+    console.log(app.globalData.userInfo)
+    if (app.globalData.userInfo === null) {
       that.setData({
         notLogin: true
       }) 
     } else {
       that.setData({
         notLogin: false
-      })
+      }) 
     }
   },
 

@@ -1,4 +1,6 @@
 // pages/viewDetail/viewDetail.js
+// 获取应用实例
+const app = getApp()
 Page({
 
   /**
@@ -34,7 +36,11 @@ Page({
     // 暂存回复主体信息
     commentItem: {},
     // 评论实体列表
-    commentBeanList: []
+    commentBeanList: [],
+    // 是否关注帖子用户或者发帖者是本人,0未关注，1已关注，2本人
+    followedOrSelf: null,
+    // 用户是否收藏此帖子
+    isCollect: null
   },
 
   // 进入页面获取评论
@@ -57,7 +63,6 @@ Page({
         that.setData({
           commentBeanList: that.data.commentBeanList
         })
-        console.log(that.data.commentBeanList)
       }
     })
   },
@@ -276,6 +281,105 @@ Page({
       });
     });
   },
+  // 查看用户是否关注帖子发布者
+  seeUserIsFollowPublisher: function () {
+    var that = this
+    if (that.data.postBean.puid === app.globalData.userInfo.uid) {
+      that.setData({
+        followedOrSelf: 2
+      })
+    } else {
+      wx.request({
+        url: 'http://localhost:8888/userAttention/seeUserIsFollowPublisher',
+        data: {
+          userId: app.globalData.userInfo.uid,
+          attentionId: that.data.postBean.puid
+        },
+        success: function (res) {
+          if (res.data.code !== "200") {
+            return
+          }
+          if (res.data.data === false) {
+            that.setData({
+              followedOrSelf: 0
+            })
+          } else {
+            that.setData({
+              followedOrSelf: 1
+            })
+          }
+        } 
+      })
+    }
+  },
+  // 切换关注状态
+  switchAttentionState: function (e) {
+    var that = this
+    // 直接将获取到的e.currentTarget.dataset.item传给后端来做
+    wx.request({
+      url: 'http://localhost:8888/userAttention/switchAttentionState',
+      data: {
+        switchFollow: e.currentTarget.dataset.item,
+        userId: app.globalData.userInfo.uid,
+        attentionId: that.data.postBean.puid
+      },
+      success: function (res) {
+        that.setData({
+          followedOrSelf: res.data.data
+        })
+      }
+    })
+  },
+  // 进入页面调用查看用户是否收藏此帖子
+  seeUserFavoritesPost: function () {
+    var that = this
+    wx.request({
+      url: 'http://localhost:8888/postCollection/seeUserFavoritesPost',
+      data: {
+        collectorid: app.globalData.userInfo.uid,
+        favoritesid: that.data.postBean.postid
+      },
+      method: 'POST',
+      success: function (res) {
+        if (res.data.code !== "200") {
+          return
+        }
+        that.setData({
+          isCollect: res.data.data
+        })
+      
+      } 
+    })
+  },
+  // 切换收藏帖子状态
+  switchCollectState: function (e) {
+    var that = this
+    // 直接将获取到的e.currentTarget.dataset.item传给后端来做
+    wx.request({
+      url: 'http://localhost:8888/postCollection/switchCollectState',
+      data: {
+        isCollect: e.currentTarget.dataset.item,
+        collectorid: app.globalData.userInfo.uid,
+        favoritesid: that.data.postBean.puid
+      },
+      success: function (res) {
+        if (res.data.code !== "200") {
+          wx.showToast({
+            title: res.data.msg,
+            icon: 'none'
+          })
+          return
+        }
+        wx.showToast({
+          title: res.data.msg,
+          icon: 'none'
+        })
+        that.setData({
+          isCollect: res.data.data
+        })
+      }
+    })
+  },
 
   /**
    * 生命周期函数--监听页面加载
@@ -296,7 +400,6 @@ Page({
       imgUrls: itemBean.postPicture,
       maxImgHeight: maxHeight
     })
-    console.log(that.data.postBean)
   },
 
   /**
@@ -309,6 +412,10 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
+    // 进入页面调用查看用户是否关注帖子发布者
+    this.seeUserIsFollowPublisher()
+    // 进入页面调用查看用户是否收藏此帖子
+    this.seeUserFavoritesPost()
     // 进入页面调用查看评论方法
     this.getCommentList()
   },

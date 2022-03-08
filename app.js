@@ -13,6 +13,12 @@ App({
       }
     })
   },
+  onGetUserInfo() {
+    let uInfo = wx.getStorageSync('userInfo')
+    if (uInfo !== "") {
+      this.globalData.userInfo = uInfo
+    }
+  },
   globalData: {
     userInfo: null,
     header: {

@@ -1,4 +1,6 @@
 // pages/addNotes/addNotes.js
+// 获取应用实例
+const app = getApp()
 Page({
 
   /**
@@ -79,7 +81,6 @@ Page({
         if(count !== length){
           //递归调用，上传下一张
           that.uploadOneByOne(imgPaths, successUp, failUp, count, length);
-          console.log('正在上传第' + count + '张');
         }
       }
     })
@@ -169,7 +170,7 @@ Page({
       })
       return
     }
-    let puid = wx.getStorageSync('userInfo').uid
+    // let puid = wx.getStorageSync('userInfo').uid
     // 向后台发送添加请求
     wx.request({
       url: 'http://localhost:8888/tbPost/addPost',
@@ -181,7 +182,7 @@ Page({
         address: that.data.address,
         latitude: that.data.latitude,
         longitude: that.data.longitude,
-        puid: puid,
+        puid: app.globalData.userInfo.uid,
         pics: that.data.imgsID,
         width: that.data.imgWidth,
         height: that.data.imgHeight

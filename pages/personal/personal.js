@@ -1,4 +1,6 @@
 // pages/personal/personal.js
+// 获取应用实例
+const app = getApp()
 Page({
 
   /**
@@ -51,21 +53,32 @@ Page({
    */
   onShow: function () {
     var that = this
-    let isUserInfo = wx.getStorageSync('userInfo')
-    if (isUserInfo === null || isUserInfo === "") {
+    console.log(app.globalData.userInfo)
+    if (app.globalData.userInfo === null) {
       that.setData({
         isLogin: true
       }) 
     } else {
       that.setData({
         isLogin: false,
-        userInfo: {
-          name: isUserInfo.username,
-          id: isUserInfo.uid,
-          picURL: isUserInfo.picURL
-        }
+        userInfo: app.globalData.userInfo
       }) 
     }
+    // let isUserInfo = wx.getStorageSync('userInfo')
+    // if (isUserInfo === null || isUserInfo === "") {
+    //   that.setData({
+    //     isLogin: true
+    //   }) 
+    // } else {
+    //   that.setData({
+    //     isLogin: false,
+    //     userInfo: {
+    //       name: isUserInfo.username,
+    //       id: isUserInfo.uid,
+    //       picURL: isUserInfo.picURL
+    //     }
+    //   }) 
+    // }
   },
 
   /**

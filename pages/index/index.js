@@ -4,6 +4,8 @@ const app = getApp()
 
 Page({
   data: {
+    // 用户信息（存在即为登录）
+    userInfo: null,
     // "关注、推荐"的切换
     segmentActiveKey: ["one","two"],
     // 切换的标识 "0"为关注 "1"为推荐
@@ -15,19 +17,15 @@ Page({
     // 推荐帖子起始搜索
     recommendStart: 0,
     // 帖子一次搜索数量，先定10个(如果没有图片的话，10个可能不太够)
-    size: 16
-    // userInfo: {},
+    size: 16,
+    // 关注的帖子
+    attentions: [],
+    // 关注帖子起始搜索
+    attentionStart: 0
   },
-  // // 事件处理函数
-  // bindViewTap() {
-  //   wx.navigateTo({
-  //     url: '../logs/logs'
-  //   })
-  // },
 
+  // 查看帖子详情
   viewDetails (e) {
-    console.log(e.currentTarget.dataset.item)
-    // var that = this
     //拿到单个帖子详情
     var item = e.currentTarget.dataset.item
     //将对象转为string
@@ -39,9 +37,39 @@ Page({
   // 获取帖子信息
   getRecommendList() {
     var that = this
-    // if (that.data.segmentActiveKeyTag === 0) {
-
-    // }
+    if (that.data.segmentActiveKeyTag === 0) {
+      wx.request({
+        url: 'http://localhost:8888/tbPost/getAttentionList',
+        data: {
+          userid: app.globalData.userInfo.uid,
+          // size: that.data.size,
+          size: 5,
+          start: that.data.attentionStart
+        },
+        success (res) {
+          if (res.data.code !== "200") {
+            return
+          }
+          if (res.data.data.length !== 0) {
+            res.data.data.forEach(item => {
+              var imgHeights = []
+              for (var i = 0; i < item.postPicture.length; i++) {
+                imgHeights.push(item.postPicture[i].height/item.postPicture[i].width)
+              }
+              var maxHeight = Math.max.apply(null, imgHeights) * 288
+              item.maxHeight = maxHeight
+              item.replytime = item.time.substring(0, 10),
+              // 每个关注贴是否展开，默认为否
+              item.isExpand = false
+              that.data.attentions.push(item)
+            })
+            that.setData({
+              attentions: that.data.attentions
+            })
+          }
+        }
+      })
+    }
     if (that.data.segmentActiveKeyTag === 1) {
       wx.request({
         url: 'http://localhost:8888/tbPost/getRecommendList',
@@ -50,6 +78,9 @@ Page({
           start: that.data.recommendStart
         },
         success (res) {
+          if (res.data.code !== "200") {
+            return
+          }
           for (var i = 0; i < res.data.data.length; i++) {
             if (i % 2 == 0) {
               that.data.recommendLeft.push(res.data.data[i])
@@ -67,16 +98,63 @@ Page({
       })
     }
   },
+  // 点击关注和推荐的切换
+  changeTabs: function (e) {
+    var that = this
+    that.setData({
+      segmentActiveKeyTag: e.detail.currentIndex
+    })
+    if (that.data.userInfo !== null && e.detail.currentIndex === 0 && that.data.attentions.length === 0) {
+      that.getRecommendList()
+    }
+  },
+  // 点击关注帖子是否展开的状态改变
+  changeExpand: function (e) {
+    console.log(e)
+    var that = this
+    that.data.attentions.forEach((item, index) => {
+      if (item.postid === e.currentTarget.dataset.item.postid) {
+        item.isExpand = true
+      }
+    })
+    that.setData({
+      attentions: that.data.attentions
+    })
+  },
+  // 未登录时跳转到个人中心界面去登录
+  loginToJump: function () {
+    wx.switchTab({
+      url: '../personal/personal',
+    })
+  },
   onLoad() {
     this.getRecommendList()
   },
   onShow() {
+    var that = this
     let beforeTabBar = {
       index: 0,
       pagePath: "pages/index/index",
       text: "首页"
     }
     wx.setStorageSync('beforeTabBar', beforeTabBar)
+    // 用app.globalData.userInfo会出现每一次编译都是未登录的状态
+    // 好坏参半吧，还是可以借鉴一些其他小程序是否有保存，还是可以存一个在Storage
+    app.onGetUserInfo()
+    that.setData({
+      userInfo: app.globalData.userInfo
+    })
+    // let isUserInfo = wx.getStorageSync('userInfo')
+
+    // if (isUserInfo === null || isUserInfo === "") {
+    //   that.setData({
+    //     userInfo: null
+    //   }) 
+    // } else {
+    //   that.setData({
+    //     userInfo: isUserInfo
+    //   })
+    // }
   },
   // 监听tabBar事件
   onTabItemTap: function (item) {
@@ -85,30 +163,12 @@ Page({
   // 这里做触底监听，触底之后再搜索然后加入数据，并不是删除而是加入，先用push将数据push进去再改动值
   onReachBottom() {
     var that = this
+    if (that.data.segmentActiveKeyTag === 0) {
+      that.data.attentionStart += 1
+    }
     if (that.data.segmentActiveKeyTag === 1) {
       that.data.recommendStart += 1
-      that.getRecommendList()
     }
+    that.getRecommendList()
   }
-  // getUserProfile(e) {
-  //   // 推荐使用wx.getUserProfile获取用户信息，开发者每次通过该接口获取用户个人信息均需用户确认，开发者妥善保管用户快速填写的头像昵称，避免重复弹窗
-  //   wx.getUserProfile({
-  //     desc: '展示用户信息', // 声明获取用户个人信息后的用途，后续会展示在弹窗中，请谨慎填写
-  //     success: (res) => {
-  //       console.log(res)
-  //       this.setData({
-  //         userInfo: res.userInfo,
-  //         hasUserInfo: true
-  //       })
-  //     }
-  //   })
-  // },
-  // getUserInfo(e) {
-  //   // 不推荐使用getUserInfo获取用户信息，预计自2021年4月13日起，getUserInfo将不再弹出弹窗，并直接返回匿名的用户个人信息
-  //   console.log(e)
-  //   this.setData({
-  //     userInfo: e.detail.userInfo,
-  //     hasUserInfo: true
-  //   })
-  // }
 })

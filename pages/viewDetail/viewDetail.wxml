@@ -3,6 +3,12 @@
   <view style="padding: 5px 0 0 5px;" class="userColumn">
     <image class="userColumnImg" src="{{postBean.tbUser.picURL}}"></image>
     <view class="userColumnUsername">{{postBean.tbUser.username}}</view>
+    <block wx:if="{{followedOrSelf === 0}}">
+      <view data-item="{{followedOrSelf}}" bindtap="switchAttentionState" class="notFollowed">关注</view>
+    </block>
+    <block wx:if="{{followedOrSelf === 1}}">
+      <view data-item="{{followedOrSelf}}" bindtap="switchAttentionState" class="followed">已关注</view>
+    </block>
   </view>
   <view wx:if="{{postBean.postPicture.length !== 0}}">
     <swiper duration="{{duration}}" style="height: {{maxImgHeight}}px;">
@@ -56,7 +62,10 @@
   <view class="commentColumn">
     <input focus="{{replyFoucs == true}}" bindconfirm="sendComment" bindinput="getInputComment" value="{{inputComment}}" bindblur="replyOutofFocus" class="commentInput" placeholder="{{placeholder}}" />
     <!-- <text class="send" bindtap="sendComment">发 送</text> -->
-    <image class="like" src="/image/like.png"></image>
+    <view bindtap="switchCollectState" data-item="{{isCollect}}">
+      <view wx:if="{{isCollect === false}}"><image class="like" src="/image/collect.png"></image></view>
+      <view wx:if="{{isCollect === true}}"><image class="like" src="/image/collected.png"></image></view>
+    </view>
     <image bindtap="scrollToComment" class="comment" src="/image/comment.png"></image>
   </view>
 </view>

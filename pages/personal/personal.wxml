@@ -10,8 +10,8 @@
 <view wx:if="{{!isLogin}}" class="headCard">
   <view class="LAvatar">
     <l-avatar src="{{userInfo.picURL}}"></l-avatar>
-    <view class="uname">{{userInfo.name}}\n</view>
-    <view class="uid">用户编号：{{userInfo.id}}</view>
+    <view class="uname">{{userInfo.username}}\n</view>
+    <view class="uid">用户编号：{{userInfo.uid}}</view>
   </view>
 </view>
 
