@@ -166,6 +166,9 @@ Page({
   //点击回到用户初始位置
   returnOriginalLocation (e){
     var that = this
+    that.setData({
+      searchPlace: null
+    })
     that.mapCtx.moveToLocation()
     that.getFood(that.data.longitude, that.data.latitude)
   },
