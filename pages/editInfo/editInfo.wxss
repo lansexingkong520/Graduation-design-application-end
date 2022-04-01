@@ -1,0 +1,9 @@
+/* pages/editInfo/editInfo.wxss */
+.editName {
+  position: relative;
+}
+.nameLocation {
+  position: absolute;
+  top: 0;
+  right: 0;
+}

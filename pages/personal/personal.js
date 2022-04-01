@@ -33,6 +33,13 @@ Page({
       url: '../userLogin/userLogin?id=' + id,
     })
   },
+  // 点击跳转编辑资料
+  jumpToEdit: function () {
+    // 页面跳转, 因为storage里有用户信息，所以用户信息直接取，不用传
+    wx.navigateTo({
+      url: '../editInfo/editInfo',
+    })
+  },
 
   /**
    * 生命周期函数--监听页面加载

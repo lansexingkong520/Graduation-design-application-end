@@ -1,0 +1,38 @@
+<!--pages/editInfo/editInfo.wxml-->
+<view>
+  <view style="width: 80px;margin: 10px auto;">
+    <image style="width: 80px;height: 80px;border-radius: 50%;" src="{{userInfo.picURL}}"></image>
+  </view>
+  <view style="margin: 10px 10px 0 10px;">
+    <view class="editName" bindtap="onClickEditName">
+      <view>用户名</view>
+      <view class="nameLocation">{{userInfo.username}} 
+        <image style="width: 16px;height: 16px;" src="../../image/rightArrow.png"></image>
+      </view>
+      <view style="border-bottom: 1px solid #8a8a8a8a;margin: 10px 0;"></view>
+    </view>
+
+    <view class="editName">
+      <view>用户编号</view>
+      <view class="nameLocation">{{userInfo.uid}}</view>
+      <view style="border-bottom: 1px solid #8a8a8a8a;margin: 10px 0;"></view>
+    </view>
+
+    <view class="editName" bindtap="onClickEditSex">
+      <view>性别</view>
+      <view class="nameLocation">{{userInfo.sex}} 
+        <image style="width: 16px;height: 16px;" src="../../image/rightArrow.png"></image>
+      </view>
+      <view style="border-bottom: 1px solid #8a8a8a8a;margin: 10px 0;"></view>
+    </view>
+
+    <view class="editName" bindtap="onClickEditIntroduction">
+      <view>个人简介</view>
+      <view class="nameLocation">
+        <view style="position: absolute;right: 10px;width: 150px;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;">{{userInfo.selfintroduction}} </view>
+        <image style="width: 16px;height: 16px;position: absolute;right: 0;top: 0;" src="../../image/rightArrow.png"></image>
+      </view>
+      <view style="border-bottom: 1px solid #8a8a8a8a;margin: 10px 0;"></view>
+    </view>
+  </view>
+</view>

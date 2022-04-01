@@ -9,6 +9,8 @@ Page({
   data: {
     // 屏幕宽度
     screenWidth: 0,
+    // 用户信息（存在即为登录）
+    userInfo: null,
     // 帖子实体
     postBean: {},
     // 帖子发布时间
@@ -137,6 +139,14 @@ Page({
   // 后面进行修改，改成点击"发送"键, 还是改回来吧
   sendComment: function () {
     var that = this
+    if (that.data.userInfo === null) {
+      wx.showToast({
+        title: '请您先登录，再进行评论，谢谢！',
+        icon: 'none',
+        duration: 3000
+      })
+      return
+    }
     var cuid = wx.getStorageSync('userInfo').uid
     if (that.data.replyFoucs === false) {
       // 这里是发表评论
@@ -315,6 +325,14 @@ Page({
   // 切换关注状态
   switchAttentionState: function (e) {
     var that = this
+    if (that.data.userInfo === null) {
+      wx.showToast({
+        title: '请您先登录，再进行用户关注，谢谢！',
+        icon: 'none',
+        duration: 3000
+      })
+      return
+    }
     // 直接将获取到的e.currentTarget.dataset.item传给后端来做
     wx.request({
       url: 'http://localhost:8888/userAttention/switchAttentionState',
@@ -354,6 +372,14 @@ Page({
   // 切换收藏帖子状态
   switchCollectState: function (e) {
     var that = this
+    if (that.data.userInfo === null) {
+      wx.showToast({
+        title: '请您先登录，再进行帖子收藏，谢谢！',
+        icon: 'none',
+        duration: 3000
+      })
+      return
+    }
     // 直接将获取到的e.currentTarget.dataset.item传给后端来做
     wx.request({
       url: 'http://localhost:8888/postCollection/switchCollectState',
@@ -412,10 +438,23 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    // 进入页面调用查看用户是否关注帖子发布者
-    this.seeUserIsFollowPublisher()
-    // 进入页面调用查看用户是否收藏此帖子
-    this.seeUserFavoritesPost()
+    var that = this
+    // 用户登录的情况下才看是否关注
+    app.onGetUserInfo()
+    that.setData({
+      userInfo: app.globalData.userInfo
+    })
+    if (app.globalData.userInfo !== null) {
+      // 进入页面调用查看用户是否关注帖子发布者
+      this.seeUserIsFollowPublisher()
+      // 进入页面调用查看用户是否收藏此帖子
+      this.seeUserFavoritesPost()
+    } else {
+      that.setData({
+        followedOrSelf: 0,
+        isCollect: false
+      })
+    }
     // 进入页面调用查看评论方法
     this.getCommentList()
   },

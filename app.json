@@ -12,7 +12,8 @@
     "pages/addNotes/addTransitionPage",
     "pages/loginRemind/loginRemind",
     "pages/viewDetail/viewDetail",
-    "pages/addAddress/addAddress"
+    "pages/addAddress/addAddress",
+    "pages/editInfo/editInfo"
   ],
   "window": {
     "backgroundTextStyle": "light",
