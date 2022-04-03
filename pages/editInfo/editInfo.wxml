@@ -1,7 +1,7 @@
 <!--pages/editInfo/editInfo.wxml-->
 <view>
   <view style="width: 80px;margin: 10px auto;">
-    <image style="width: 80px;height: 80px;border-radius: 50%;" src="{{userInfo.picURL}}"></image>
+    <image bindtap="headImgChange" style="width: 80px;height: 80px;border-radius: 50%;" src="{{userInfo.picURL}}"></image>
   </view>
   <view style="margin: 10px 10px 0 10px;">
     <view class="editName" bindtap="onClickEditName">
@@ -34,5 +34,34 @@
       </view>
       <view style="border-bottom: 1px solid #8a8a8a8a;margin: 10px 0;"></view>
     </view>
+  </view>
+  <!-- 修改弹窗 -->
+  <view class="mask" bindtap="hideDialog" catchtouchmove="preventTouchMove" wx:if="{{isShowModal || isShowSexModal}}"></view>
+  <view class="nameDialog" wx:if="{{isShowModal}}">
+    <view wx:if="{{isEditName}}">
+      <view class="dialogTitle">修改用户名</view>
+      <view class="dialogContent">
+        <view class="dialogInput">
+          <input class="inputClass" placeholder-class="inputHolder" bindblur="nameChange" placeholder="请输入用户名" value="{{name}}" maxlength="20"></input>
+        </view>
+      </view>
+    </view>
+    <view wx:if="{{isEditIntroduction}}">
+      <view class="dialogTitle">修改个人简介</view>
+      <view class="dialogContent">
+        <view class="dialogInput">
+          <textarea class="textareaClass" placeholder-class="inputHolder" bindinput="introductionChange" placeholder="请输入个人简介" value="{{introduction}}" maxlength="100"></textarea>
+        </view>
+      </view>
+    </view>
+    <view class="dialogFooter">
+      <view class="cancelBtn" bindtap="onCancel" data-status="cancel">取消</view>
+      <view class="confirmBtn" bindtap="onConfirm" data-status="confirm">修改</view>
+    </view>
+  </view>
+  <view class="nameDialog" wx:if="{{isShowSexModal}}">
+    <button style="width: 540rpx;" bindtap="sexChange" data-item="男">男</button>
+    <view style="border-bottom: 1px solid #8a8a8a8a;"></view>
+    <button style="width: 540rpx;" bindtap="sexChange" data-item="女">女</button>
   </view>
 </view>

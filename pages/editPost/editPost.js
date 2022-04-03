@@ -1,4 +1,4 @@
-// pages/addNotes/addNotes.js
+// pages/editPost/editPost.js
 // 获取应用实例
 const app = getApp()
 Page({
@@ -7,6 +7,8 @@ Page({
    * 页面的初始数据
    */
   data: {
+    // 帖子实体
+    postBean: {},
     // 笔记图片
     imgs: [],
     // 图片上传后得到的图片id
@@ -35,12 +37,9 @@ Page({
     longitude: null
   },
   // 上传图片
-  // 这是本地选中图片
   bindUpload: function (e) {
     this.data.count = this.data.maxCount - this.data.imgs.length
     var that = this
-    // wx.chooseImage 已经不更新了，用chooseMedia可以选择图片或者视频
-    // 在初期先用着chooseImage，chooseMedia可以等后期升级的时候使用
     wx.chooseImage({
       count: that.data.count,
       sourceType: ['album', 'camera'],
@@ -64,8 +63,6 @@ Page({
       name: 'file',
       success:function (res) {
         successUp++;
-        // 这里的图片直接用本地，因为上传后端之后资源的加载也需要时间，而这个时间大于渲染响应的时间
-        // 如果用数据库保存的地址，会导致这时的图片加载出现问题（404）
         that.data.imgs.push(imgPaths[count])
         that.data.imgsID.push(JSON.parse(res.data).data.picid)
         that.setData({
@@ -94,6 +91,8 @@ Page({
       success: function (res) {
         if (res.confirm) {
           let index = e.currentTarget.dataset.index
+          // 这里只用删除img的url和ID，宽高会自动重新加载因为bindLoad事件
+          // 只不过这里需要将宽高清空而已，避免数据多出来。
           that.data.imgs.splice(index, 1)
           that.data.imgsID.splice(index, 1)
           that.setData({
@@ -147,14 +146,13 @@ Page({
     })
     // wx.removeStorageSync('addLocation')
   },
-  // 取消发布笔记，撤回
+  // 取消修改笔记
   cancelRelease: function () {
-    // 跳转到发布过渡页面，用这个跳回
     wx.navigateBack({
-      delta: 1,
+      delta: 0,
     })
   },
-  // 发布笔记，发布成功则直接跳到首页，不成功则提醒用户，不跳转
+  // 修改笔记，修改成功跳回前一页，不成功则提醒用户，不跳转
   releaseNotes: function (e) {
     var that = this
     if (that.data.title == "" || that.data.title == null) {
@@ -173,10 +171,9 @@ Page({
       })
       return
     }
-    // let puid = wx.getStorageSync('userInfo').uid
     // 向后台发送添加请求
     wx.request({
-      url: 'http://localhost:8888/tbPost/addPost',
+      url: 'http://localhost:8888/tbPost/modifyPost',
       data: {
         title: that.data.title,
         content: that.data.content,
@@ -185,7 +182,7 @@ Page({
         address: that.data.address,
         latitude: that.data.latitude,
         longitude: that.data.longitude,
-        puid: app.globalData.userInfo.uid,
+        postid: that.data.postBean.postid,
         pics: that.data.imgsID,
         width: that.data.imgWidth,
         height: that.data.imgHeight
@@ -197,21 +194,17 @@ Page({
             title: res.data.msg,
             icon: "none"
           })
-        } else {
-          console.log(res)
-          // 这里的处理是为了之前的发笔记过渡页
-          let jumpItem = wx.getStorageSync('releaseToJump')
-          let number = jumpItem.num
-          jumpItem = {
-            num: number,
-            text: "已发布"
-          }
-          wx.setStorageSync('releaseToJump', jumpItem)
-          // 发布成功跳转首页
-          wx.switchTab({
-            url: '/pages/index/index'
-          })
+          return
         }
+        // 将修改后返回的数据存储然后给viewDetail页面
+        let editPost = {
+          isEdit: "yes",
+          itemBean: res.data.data
+        }
+        wx.setStorageSync('editPost', editPost)
+        wx.navigateBack({
+          delta: 0,
+        })
       }
     })
   },
@@ -219,7 +212,28 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    var that=this
+    var itemBean = JSON.parse(options.itemBean)
+    console.log(itemBean)
+    let images = []
+    let imagesId = []
+    if (itemBean.postPicture.length !== 0) {
+      itemBean.postPicture.forEach(item => {
+        images.push(item.url)
+        imagesId.push(item.ppicid)
+      })
+    }
+    that.setData({
+      postBean: itemBean,
+      count: itemBean.postPicture.length,
+      title: itemBean.title,
+      content: itemBean.content,
+      topic: itemBean.topic,
+      place: itemBean.place,
+      address: itemBean.address,
+      imgs: images,
+      imgsID: imagesId
+    })
   },
 
   /**
@@ -234,7 +248,6 @@ Page({
    */
   onShow: function () {
     // 先做地址有没有的判断，有就写上，没有就过（因为添加地址用的是navigateBack，这个不能带参数）
-    // wx.setStorageSync('addLocation', this.data.suggestion[id])
     var that = this
     var location = wx.getStorageSync('addLocation')
     if (location !== null && location !== "") {
@@ -260,7 +273,7 @@ Page({
    * 生命周期函数--监听页面卸载
    */
   onUnload: function () {
-    
+
   },
 
   /**

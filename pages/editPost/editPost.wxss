@@ -1,4 +1,4 @@
-/* pages/addNotes/addNotes.wxss */
+/* pages/editPost/editPost.wxss */
 .titlePanel {
   display:flex;
   justify-content:center;

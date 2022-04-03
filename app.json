@@ -13,7 +13,8 @@
     "pages/loginRemind/loginRemind",
     "pages/viewDetail/viewDetail",
     "pages/addAddress/addAddress",
-    "pages/editInfo/editInfo"
+    "pages/editInfo/editInfo",
+    "pages/editPost/editPost"
   ],
   "window": {
     "backgroundTextStyle": "light",

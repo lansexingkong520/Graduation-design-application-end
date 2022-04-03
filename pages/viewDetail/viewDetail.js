@@ -42,7 +42,11 @@ Page({
     // 是否关注帖子用户或者发帖者是本人,0未关注，1已关注，2本人
     followedOrSelf: null,
     // 用户是否收藏此帖子
-    isCollect: null
+    isCollect: null,
+    // 其他操作是否弹出
+    isPopup: false,
+    // 删除帖子确认
+    confirmDelete: false
   },
 
   // 进入页面获取评论
@@ -277,6 +281,64 @@ Page({
       inputComment: ''
     })
   },
+  // 评论删除，先确认是否删除
+  CommentDelete: function (e) {
+    var that = this
+    console.log(e)
+    that.hideOtherOperation()
+    wx.showModal({
+      title: "提示",
+      content: "是否删除此评论",
+      success: function (res) {
+        if (res.confirm) {
+          // 判断是评论还是回复, 评论有个标志distinguish为0
+          if (e.currentTarget.dataset.item.distinguish === 0) {
+            wx.request({
+              url: 'http://localhost:8888/tbComment/deleteComment/' + e.currentTarget.dataset.item.cid,
+              method: 'Delete',
+              success: function (res) {
+                wx.showToast({
+                  title: '评论已删除',
+                  duration: 3000
+                })
+                that.setData({
+                  commentBeanList: []
+                })
+                that.getCommentList()
+              },
+              fail: function (res) {
+                wx.showToast({
+                  title: '评论删除失败',
+                })
+              }
+            })
+          }else {
+            wx.request({
+              url: 'http://localhost:8888/tbCommentreply/deleteReply/' + e.currentTarget.dataset.item.crid,
+              method: 'Delete',
+              success: function (res) {
+                wx.showToast({
+                  title: '评论已删除',
+                  duration: 3000
+                })
+                that.setData({
+                  commentBeanList: []
+                })
+                that.getCommentList()
+              },
+              fail: function (res) {
+                wx.showToast({
+                  title: '评论删除失败',
+                })
+              }
+            })
+          }
+        } else if (res.cancel) {
+          console.log("用户点击取消")
+        }
+      }
+    })
+  },
   // 点击评论图标，页面滚动到评论那里
   scrollToComment: function () {
     var that= this;
@@ -348,6 +410,58 @@ Page({
       }
     })
   },
+  // 如果是用户是帖子发布者就进行其他操作
+  // 获取其他操作菜单
+  getOtherOperations: function () {
+    this.setData({
+      isPopup: true
+    })
+  },
+  // 隐藏操作菜单
+  hideOtherOperation: function () {
+    this.setData({
+      isPopup: false
+    })
+  },
+  // 跳转到编辑帖子页面
+  postEdit: function () {
+    var itemBean = JSON.stringify(this.data.postBean)
+    this.hideOtherOperation()
+    wx.navigateTo({
+      url: '../editPost/editPost?itemBean=' + itemBean,
+    })
+  },
+  // 帖子删除
+  postDelete: function () {
+    var that = this
+    that.hideOtherOperation()
+    that.setData({
+      confirmDelete: true
+    })
+  },
+  // 点击删除按钮 
+  onConfirm: function () {
+    var that = this
+    // 原来这里先进行了返回操作
+    wx.navigateBack({
+      delta: 0,
+    })
+    wx.request({
+      url: 'http://localhost:8888/tbPost/deletePost/' + that.data.postBean.postid,
+      method: 'Delete',
+      success: function (res) {
+      }
+    })
+  },
+  // 点击取消按钮
+  onCancel: function () {
+    this.hideDialog()
+  },
+  hideDialog: function () {
+    this.setData({
+      confirmDelete: false,
+    })
+  },
   // 进入页面调用查看用户是否收藏此帖子
   seeUserFavoritesPost: function () {
     var that = this
@@ -406,14 +520,10 @@ Page({
       }
     })
   },
-
-  /**
-   * 生命周期函数--监听页面加载
-   */
-  onLoad: function (options) {
-    var windowWidth = wx.getSystemInfoSync().windowWidth
+  // 初始化时单独提出来的方法
+  init: function (itemBean) {
     var that=this
-    var itemBean = JSON.parse(options.itemBean)
+    var windowWidth = wx.getSystemInfoSync().windowWidth
     var imgHeights = []
     for (var i = 0; i < itemBean.postPicture.length; i++) {
       imgHeights.push(itemBean.postPicture[i].height/itemBean.postPicture[i].width)
@@ -427,6 +537,15 @@ Page({
       maxImgHeight: maxHeight
     })
   },
+  /**
+   * 生命周期函数--监听页面加载
+   * 在这里要注意，如果是wx.navigateBack，不会进入onLoad，只能在onShow里面去弄
+   */
+  onLoad: function (options) {
+    var that=this
+    let itemBean = JSON.parse(options.itemBean)
+    that.init(itemBean)
+  },
 
   /**
    * 生命周期函数--监听页面初次渲染完成
@@ -439,6 +558,12 @@ Page({
    */
   onShow: function () {
     var that = this
+    let editPost = wx.getStorageSync('editPost')
+    if (editPost !== "" && editPost.isEdit === 'yes') {
+      let itemBean = editPost.itemBean
+      wx.removeStorageSync('editPost')
+      that.init(itemBean)
+    }
     // 用户登录的情况下才看是否关注
     app.onGetUserInfo()
     that.setData({

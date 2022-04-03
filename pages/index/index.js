@@ -17,7 +17,7 @@ Page({
     // 推荐帖子起始搜索
     recommendStart: 0,
     // 帖子一次搜索数量，先定10个(如果没有图片的话，10个可能不太够)
-    size: 16,
+    size: 10,
     // 关注的帖子
     attentions: [],
     // 关注帖子起始搜索
@@ -110,7 +110,6 @@ Page({
   },
   // 点击关注帖子是否展开的状态改变
   changeExpand: function (e) {
-    console.log(e)
     var that = this
     that.data.attentions.forEach((item, index) => {
       if (item.postid === e.currentTarget.dataset.item.postid) {
@@ -128,10 +127,18 @@ Page({
     })
   },
   onLoad() {
+    // 不在这里做列表的刷新，因为只要这个页面建好之后就不会触发onLoad事件
     this.getRecommendList()
   },
   onShow() {
     var that = this
+    that.setData({
+      recommends: [],
+      recommendLeft: [],
+      recommendRight: [],
+      recommendStart: 0
+    })
+    this.getRecommendList()
     let beforeTabBar = {
       index: 0,
       pagePath: "pages/index/index",

@@ -1,5 +1,5 @@
 <!--pages/viewDetail/viewDetail.wxml-->
-<view class="store-page">
+<view class="store-page" bindtap="hideOtherOperation" capture-bind:touchmove="hideOtherOperation">
   <view style="padding: 5px 0 0 5px;" class="userColumn">
     <image class="userColumnImg" src="{{postBean.tbUser.picURL}}"></image>
     <view class="userColumnUsername">{{postBean.tbUser.username}}</view>
@@ -9,6 +9,23 @@
     <block wx:if="{{followedOrSelf === 1}}">
       <view data-item="{{followedOrSelf}}" bindtap="switchAttentionState" class="followed">已关注</view>
     </block>
+    <block wx:if="{{followedOrSelf === 2}}">
+      <view class="operations" catchtap="getOtherOperations"><image style="width: 20px;height: 20px;" src="../../image/ellipsis.png"></image></view>
+    </block>
+  </view>
+  <!-- 其他操作菜单 -->
+  <view wx:if="{{isPopup}}" class="popup">
+    <button style="width: 85px;border-bottom: 1px solid #8a8a8a;" catchtap="postEdit" data-item="edit">编辑</button>
+    <button style="width: 85px;" catchtap="postDelete" data-item="delete">删除</button>
+  </view>
+  <!-- 确认弹窗 -->
+  <view class="mask" bindtap="hideDialog" catchtouchmove="preventTouchMove" wx:if="{{confirmDelete}}"></view>
+  <view class="dialog" wx:if="{{confirmDelete}}">
+    <view class="dialogTitle">确认删除此帖子？</view>
+    <view class="dialogFooter">
+      <view class="cancelBtn" bindtap="onCancel" data-status="cancel">取消</view>
+      <view class="confirmBtn" bindtap="onConfirm" data-status="confirm">删除</view>
+    </view>
   </view>
   <view wx:if="{{postBean.postPicture.length !== 0}}">
     <swiper duration="{{duration}}" style="height: {{maxImgHeight}}px;">
@@ -36,6 +53,10 @@
         <image class="commentItemHead" src="{{item.tbUser.picURL}}"></image>
         <view class="commentItemWord">
           <view style="font-size: 32rpx;color: #8a8a8a;">{{item.tbUser.username}}</view>
+          <!-- 评论删除 -->
+          <block wx:if="{{followedOrSelf === 2 || item.tbUser.uid === userInfo.uid}}">
+            <view data-item="{{item}}" class="commentOperations" catchtap="CommentDelete"><image style="width: 20px;height: 20px;" src="../../image/ellipsis.png"></image></view>
+          </block>
           <view style="font-size: 28rpx;color: #8a8a8a;">{{item.time}}</view>
           <view style="font-size: 34rpx;">{{item.message}}</view>
           <block wx:if="{{item.commentReplyBeanList.length !== 0}}">
@@ -43,6 +64,10 @@
               <image class="replyItemHead" src="{{item.tbUser.picURL}}"></image>
               <view class="replyItemWord">
                 <view style="font-size: 32rpx;color: #8a8a8a;">{{item.tbUser.username}} <text wx:if="{{item.ccrusername !== null}}">回复 {{item.ccrusername}}</text></view>
+                <!-- 评论删除 -->
+                <block wx:if="{{followedOrSelf === 2 || item.tbUser.uid === userInfo.uid}}">
+                  <view data-item="{{item}}" class="commentOperations" catchtap="CommentDelete"><image style="width: 20px;height: 20px;" src="../../image/ellipsis.png"></image></view>
+                </block>
                 <view style="font-size: 28rpx;color: #8a8a8a;">{{item.replytime}}</view>
                 <view style="font-size: 34rpx;">{{item.content}}</view>
               </view>
@@ -58,7 +83,7 @@
     </view>
   </view>
   <view style="height: 50px;"></view>
-  <!-- 这里写评论栏和收藏？ -->
+  <!-- 这里写评论栏和收藏 -->
   <view class="commentColumn">
     <input focus="{{replyFoucs == true}}" bindconfirm="sendComment" bindinput="getInputComment" value="{{inputComment}}" bindblur="replyOutofFocus" class="commentInput" placeholder="{{placeholder}}" />
     <!-- <text class="send" bindtap="sendComment">发 送</text> -->
