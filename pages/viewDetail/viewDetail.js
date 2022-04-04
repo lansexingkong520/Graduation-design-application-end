@@ -302,7 +302,8 @@ Page({
                   duration: 3000
                 })
                 that.setData({
-                  commentBeanList: []
+                  commentBeanList: [],
+                  commentStart: 0
                 })
                 that.getCommentList()
               },
@@ -322,7 +323,8 @@ Page({
                   duration: 3000
                 })
                 that.setData({
-                  commentBeanList: []
+                  commentBeanList: [],
+                  commentStart: 0
                 })
                 that.getCommentList()
               },
@@ -442,14 +444,14 @@ Page({
   // 点击删除按钮 
   onConfirm: function () {
     var that = this
-    // 原来这里先进行了返回操作
-    wx.navigateBack({
-      delta: 0,
-    })
     wx.request({
       url: 'http://localhost:8888/tbPost/deletePost/' + that.data.postBean.postid,
       method: 'Delete',
       success: function (res) {
+        wx.setStorageSync('postChange', 'true')
+        wx.navigateBack({
+          delta: 0,
+        })
       }
     })
   },

@@ -207,6 +207,7 @@ Page({
             text: "已发布"
           }
           wx.setStorageSync('releaseToJump', jumpItem)
+          wx.setStorageSync('postChange', 'true')
           // 发布成功跳转首页
           wx.switchTab({
             url: '/pages/index/index'

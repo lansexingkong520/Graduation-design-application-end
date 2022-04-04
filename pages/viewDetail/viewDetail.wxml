@@ -64,7 +64,7 @@
               <image class="replyItemHead" src="{{item.tbUser.picURL}}"></image>
               <view class="replyItemWord">
                 <view style="font-size: 32rpx;color: #8a8a8a;">{{item.tbUser.username}} <text wx:if="{{item.ccrusername !== null}}">回复 {{item.ccrusername}}</text></view>
-                <!-- 评论删除 -->
+                <!-- 回复评论删除 -->
                 <block wx:if="{{followedOrSelf === 2 || item.tbUser.uid === userInfo.uid}}">
                   <view data-item="{{item}}" class="commentOperations" catchtap="CommentDelete"><image style="width: 20px;height: 20px;" src="../../image/ellipsis.png"></image></view>
                 </block>

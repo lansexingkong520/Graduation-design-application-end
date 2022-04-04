@@ -11,3 +11,49 @@
   font-size: 17px;
   color: #295b9b;
 }
+
+/* 系统消息列表 */
+.indexWarp {
+  width: 100%;
+  padding: 10px 20rpx;
+  box-sizing: border-box;
+  display: flex;
+}
+.message-wrap {
+  font-size: 14px;
+  color: #33373E;
+  margin-bottom: 10rpx;
+}
+.message-wrap .messageList {
+  flex-direction: column;
+  display: flex;
+}
+.message-wrap .messageList .item {
+  width: 288px;
+  margin: 8px 16rpx;
+  position: relative;
+  border: solid 1px #eeeeee;
+  border-radius: 4px;
+  box-shadow: #eeeeee 1px 1px;
+}
+.message-wrap .messageList .item .message-title {
+  font-weight: bold;
+  padding: 10rpx;
+}
+.message-wrap .messageList .item .message-content {
+  font-size: 32rpx;
+  padding: 10rpx;
+}
+.message-wrap .messageList .item .authorImg {
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  border: solid 1px #eeeeeeA8;
+}
+.message-wrap .messageList .item .author {
+  font-size: 32rpx;
+  color: #8a8a8aA8;
+  position: relative;
+  top: -7px;
+  left: 4px;
+}

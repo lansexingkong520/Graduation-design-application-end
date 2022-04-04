@@ -127,18 +127,22 @@ Page({
     })
   },
   onLoad() {
-    // 不在这里做列表的刷新，因为只要这个页面建好之后就不会触发onLoad事件
+    // 页面建好之后就不会触发onLoad事件
     this.getRecommendList()
   },
   onShow() {
     var that = this
-    that.setData({
-      recommends: [],
-      recommendLeft: [],
-      recommendRight: [],
-      recommendStart: 0
-    })
-    this.getRecommendList()
+    let isPostChange = wx.getStorageSync('postChange')
+    if (isPostChange !== "") {
+      wx.removeStorageSync('postChange')
+      that.setData({
+        recommends: [],
+        recommendLeft: [],
+        recommendRight: [],
+        recommendStart: 0
+      })
+      this.getRecommendList()
+    }
     let beforeTabBar = {
       index: 0,
       pagePath: "pages/index/index",
@@ -152,7 +156,6 @@ Page({
       userInfo: app.globalData.userInfo
     })
     // let isUserInfo = wx.getStorageSync('userInfo')
-
     // if (isUserInfo === null || isUserInfo === "") {
     //   that.setData({
     //     userInfo: null

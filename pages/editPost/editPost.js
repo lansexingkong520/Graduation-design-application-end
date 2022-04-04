@@ -202,6 +202,7 @@ Page({
           itemBean: res.data.data
         }
         wx.setStorageSync('editPost', editPost)
+        wx.setStorageSync('postChange', 'true')
         wx.navigateBack({
           delta: 0,
         })
