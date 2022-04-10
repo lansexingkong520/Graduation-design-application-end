@@ -5,7 +5,7 @@
         <l-segment-item tab="关注" key="one" />
         <l-segment-item tab="推荐" key="two" />
     </l-segment> 
-    <image class="searchClass" src="/image/search.png"></image>
+    <image catchtap="getSearch" class="searchClass" src="/image/search.png"></image>
   </view>
   <!-- 这一块做推荐的内容，与关注的进行分开，是否分成组件还是看后期吧 -->
   <block wx:if="{{segmentActiveKeyTag === 1}}">

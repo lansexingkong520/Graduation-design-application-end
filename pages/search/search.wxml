@@ -1,0 +1,7 @@
+<!--pages/search/search.wxml-->
+<view>
+  <view>
+    <input class="searchInput" bindinput="getSearchInput" value="{{searchWord}}" placeholder="输入标题或内容"/>
+    <view class="searchWord" bindtap="search">搜索</view>
+  </view>
+</view>

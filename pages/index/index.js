@@ -120,6 +120,12 @@ Page({
       attentions: that.data.attentions
     })
   },
+  // 跳转到搜索界面
+  getSearch: function () {
+    wx.navigateTo({
+      url: '../search/search',
+    })
+  },
   // 未登录时跳转到个人中心界面去登录
   loginToJump: function () {
     wx.switchTab({

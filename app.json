@@ -14,7 +14,9 @@
     "pages/viewDetail/viewDetail",
     "pages/addAddress/addAddress",
     "pages/editInfo/editInfo",
-    "pages/editPost/editPost"
+    "pages/editPost/editPost",
+    "pages/search/search",
+    "pages/search/searchList"
   ],
   "window": {
     "backgroundTextStyle": "light",

@@ -1,20 +1,100 @@
 <!--pages/personal/personal.wxml-->
-<view wx:if="{{isLogin}}" class="headCard">
-  <view bindtap="onClickNavigateLogin" class="LAvatar">
-    <l-avatar src="/image/user_icon.png"></l-avatar>
-    <text class="login">点击登录</text>
-    <text class="login1">用户编号：0</text>
+<view>
+  <view wx:if="{{isLogin}}" class="headCard">
+    <view bindtap="onClickNavigateLogin" class="LAvatar">
+      <l-avatar src="/image/user_icon.png"></l-avatar>
+      <text class="login">点击登录</text>
+      <text class="login1">用户编号：0</text>
+    </view>
+    <view class="notLoginRemind">您还未登录，没有此操作的权限，请先登录</view>
   </view>
-  <view class="notLoginRemind">您还未登录，没有此操作的权限，请先登录</view>
-</view>
 
-<view wx:if="{{!isLogin}}" class="headCard2" style="{{userInfo.selfintroduction !== null ? 'height: 90px' : 'height: 75px'}}">
-  <view class="LAvatar">
-    <l-avatar src="{{userInfo.picURL}}"></l-avatar>
-    <view class="uname">{{userInfo.username}}\n</view>
-    <view class="uid">用户编号：{{userInfo.uid}}</view>
-    <view class="editInfo" bindtap="jumpToEdit">编辑资料 ></view>
-    <view  wx:if="{{userInfo.selfintroduction !== null}}" class="introduction">{{userInfo.selfintroduction}}</view>
+  <view wx:if="{{!isLogin}}">
+    <view class="headCard2" style="{{userInfo.selfintroduction !== null ? 'height: 90px' : 'height: 75px'}}">
+      <view class="LAvatar">
+        <l-avatar src="{{userInfo.picURL}}"></l-avatar>
+        <view class="uname">{{userInfo.username}}\n</view>
+        <view class="uid">用户编号：{{userInfo.uid}}</view>
+        <view class="editInfo" bindtap="jumpToEdit">编辑资料 ></view>
+        <view  wx:if="{{userInfo.selfintroduction !== null}}" class="introduction">{{userInfo.selfintroduction}}</view>
+      </view>
+    </view>
+    <view>
+      <view>
+        <l-segment active-key="{{segmentActiveKey[segmentActiveKeyTag]}}" class="segmentTab" width="300" has-line="{{true}}" bind:linchange="changeTabs">
+            <l-segment-item tab="笔记" key="one" />
+            <l-segment-item tab="收藏" key="two" />
+        </l-segment> 
+      </view>
+      <block wx:if="{{segmentActiveKeyTag === 0 && noteLeft.length !== 0}}">
+        <view class="indexWarp">
+          <view class="recommend-wrap">
+            <view class="recommendList">
+              <view bindtap="viewDetails" data-item="{{item}}" class="item" wx:for="{{noteLeft}}" wx:key="item">
+                <image mode="widthFix" class="image" src="{{item.postPicture[0].url}}" wx:if="{{item.postPicture.length !== 0}}"></image>
+                <view style="padding: 10rpx 4px;" class="title">{{item.title}}</view>
+                <view style="padding: 8rpx 4px;">
+                  <image class="authorImg" src="{{item.tbUser.picURL}}"></image>
+                  <text class="author">{{item.tbUser.username}}</text>
+                </view>
+              </view>
+            </view>
+          </view>
+
+          <view class="recommend-wrap">
+            <view class="recommendList">
+              <view bindtap="viewDetails" data-item="{{item}}" class="item" wx:for="{{noteRight}}" wx:key="item">
+                <image mode="widthFix" class="image" src="{{item.postPicture[0].url}}" wx:if="{{item.postPicture.length !== 0}}"></image>
+                <view style="padding: 10rpx 4px;" class="title">{{item.title}}</view>
+                <view style="padding: 8rpx 4px;">
+                  <image class="authorImg" src="{{item.tbUser.picURL}}"></image>
+                  <text class="author">{{item.tbUser.username}}</text>
+                </view>
+              </view>
+            </view>
+          </view>
+        </view>
+      </block>
+      <block wx:if="{{segmentActiveKeyTag === 1 && collectionLeft.length !== 0}}">
+        <view class="indexWarp">
+          <view class="recommend-wrap">
+            <view class="recommendList">
+              <view bindtap="viewDetails" data-item="{{item}}" class="item" wx:for="{{collectionLeft}}" wx:key="item">
+                <image mode="widthFix" class="image" src="{{item.postPicture[0].url}}" wx:if="{{item.postPicture.length !== 0}}"></image>
+                <view style="padding: 10rpx 4px;" class="title">{{item.title}}</view>
+                <view style="padding: 8rpx 4px;">
+                  <image class="authorImg" src="{{item.tbUser.picURL}}"></image>
+                  <text class="author">{{item.tbUser.username}}</text>
+                </view>
+              </view>
+            </view>
+          </view>
+
+          <view class="recommend-wrap">
+            <view class="recommendList">
+              <view bindtap="viewDetails" data-item="{{item}}" class="item" wx:for="{{collectionRight}}" wx:key="item">
+                <image mode="widthFix" class="image" src="{{item.postPicture[0].url}}" wx:if="{{item.postPicture.length !== 0}}"></image>
+                <view style="padding: 10rpx 4px;" class="title">{{item.title}}</view>
+                <view style="padding: 8rpx 4px;">
+                  <image class="authorImg" src="{{item.tbUser.picURL}}"></image>
+                  <text class="author">{{item.tbUser.username}}</text>
+                </view>
+              </view>
+            </view>
+          </view>
+        </view>
+      </block>
+      <block wx:if="{{segmentActiveKeyTag === 0 && noteLeft.length === 0}}">
+        <view style="height: 400px;">
+          <image style="width: 200px;position: relative;left: 18%;top: 20%;" mode="widthFix" src="/image/noData.png" class=""></image>
+        </view>
+      </block>
+      <block wx:if="{{segmentActiveKeyTag === 1 && collectionLeft.length === 0}}">
+        <view style="height: 400px;">
+          <image style="width: 200px;position: relative;left: 18%;top: 20%;" mode="widthFix" src="/image/noData.png" class=""></image>
+        </view>
+      </block>
+    </view>
   </view>
 </view>
 

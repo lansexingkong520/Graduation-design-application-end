@@ -1,0 +1,44 @@
+/* pages/search/searchList.wxss */
+.indexWarp {
+  width: 100%;
+  padding: 0 20rpx;
+  box-sizing: border-box;
+  display: flex;
+}
+.indexWarp .recommend-wrap {
+  font-size: 30rpx;
+  color: #33373E;
+  margin-bottom: 10rpx;
+}
+/* 让弹性盒元素在必要的时候拆行 */
+.indexWarp .recommend-wrap .recommendList {
+  flex-direction: column;
+  display: flex;
+}
+.indexWarp .recommend-wrap .recommendList .item {
+  width: 320rpx;
+  /* height: 90px; */
+  margin: 8px 16rpx;
+  position: relative;
+  border: solid 1px #eeeeee;
+  border-radius: 4px;
+  box-shadow: #eeeeee 1px 1px;
+}
+.indexWarp .recommend-wrap .recommendList .item .image {
+  width: 100%;
+}
+.indexWarp .recommend-wrap .recommendList .item .title {
+  font-size: 14px;
+  font-weight: bold;
+}
+.indexWarp .recommend-wrap .recommendList .item .authorImg {
+  width: 25rpx;
+  height: 25rpx;
+  border-radius: 50%;
+  border: solid 1px #eeeeee;
+}
+.indexWarp .recommend-wrap .recommendList .item .author {
+  position: relative;
+  top: -1px;
+  left: 4px;
+}

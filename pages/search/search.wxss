@@ -1,0 +1,13 @@
+/* pages/search/search.wxss */
+.searchInput {
+  width: 250px;
+  background-color: #eeeeee;
+  border-radius: 25px;
+  margin: 5px;
+  padding-left: 10px;
+}
+.searchWord {
+  position: absolute;
+  right: 10px;
+  top: 5px;
+}
