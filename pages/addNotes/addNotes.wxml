@@ -32,7 +32,7 @@
   </view>
   <input bindinput="bindKeyInputTitle" style="margin: 10px;" placeholder-style="font-weight: bold" placeholder="填写标题更容易被大家发现哦~"/>
   <view style="border-bottom: #8a8a8a 1px solid; margin: 10px"></view>
-  <textarea bindinput="bindKeyInputContent" maxlength="250" style="margin: 0 10px 5px 10px;" placeholder="美味要赶紧记录下来~"></textarea>
+  <textarea bindinput="bindKeyInputContent" maxlength="1000" style="margin: 0 10px 5px 10px;" placeholder="美味要赶紧记录下来~"></textarea>
   <view style="height: 3px;background-color: #eeeeee;"></view>
   <view class="associatedAddress" bindtap="onAddAddress">
     <text style="font-weight: bold;position: relative;top: 8px;padding-left: 8px;">添加地点</text>
