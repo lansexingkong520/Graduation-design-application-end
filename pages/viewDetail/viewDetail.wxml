@@ -4,10 +4,10 @@
     <image class="userColumnImg" src="{{postBean.tbUser.picURL}}"></image>
     <view class="userColumnUsername">{{postBean.tbUser.username}}</view>
     <block wx:if="{{followedOrSelf === 0}}">
-      <view data-item="{{followedOrSelf}}" bindtap="switchAttentionState" class="notFollowed">关注</view>
+      <view data-item="{{followedOrSelf}}" bindtap="switchAttentionStateConfig" class="notFollowed">关注</view>
     </block>
     <block wx:if="{{followedOrSelf === 1}}">
-      <view data-item="{{followedOrSelf}}" bindtap="switchAttentionState" class="followed">已关注</view>
+      <view data-item="{{followedOrSelf}}" bindtap="switchAttentionStateConfig" class="followed">已关注</view>
     </block>
     <block wx:if="{{followedOrSelf === 2}}">
       <view class="operations" catchtap="getOtherOperations"><image style="width: 20px;height: 20px;" src="../../image/ellipsis.png"></image></view>

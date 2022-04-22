@@ -386,8 +386,8 @@ Page({
       })
     }
   },
-  // 切换关注状态
-  switchAttentionState: function (e) {
+  // 切换关注状态确认，主要为关注后取消关注此操作准备
+  switchAttentionStateConfig: function (e) {
     var that = this
     if (that.data.userInfo === null) {
       wx.showToast({
@@ -397,6 +397,24 @@ Page({
       })
       return
     }
+    if (e.currentTarget.dataset.item === 1) {
+      wx.showModal({
+        content: '是否取消关注此用户',
+        success (res) {
+          if (res.confirm) {
+            that.switchAttentionState(e)
+          } else if (res.cancel) {
+            return
+          }
+        }
+      })
+    } else {
+      that.switchAttentionState(e)
+    }
+  },
+  // 切换关注状态
+  switchAttentionState: function (e) {
+    var that = this
     // 直接将获取到的e.currentTarget.dataset.item传给后端来做
     wx.request({
       url: 'http://localhost:8888/userAttention/switchAttentionState',
@@ -502,7 +520,7 @@ Page({
       data: {
         isCollect: e.currentTarget.dataset.item,
         collectorid: app.globalData.userInfo.uid,
-        favoritesid: that.data.postBean.puid
+        favoritesid: that.data.postBean.postid
       },
       success: function (res) {
         if (res.data.code !== "200") {

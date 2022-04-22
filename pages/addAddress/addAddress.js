@@ -40,7 +40,7 @@ Page({
       keyword: e.detail.value, //用户输入的关键词，可设置固定值,如keyword:'KFC'
       //region:'北京', //设置城市名，限制关键词所示的地域范围，非必填参数
       success: function(res) {//搜索成功后的回调
-        console.log(res);
+        // console.log(res);
         var sug = [];
         for (var i = 0; i < res.data.length; i++) {
           sug.push({ // 获取返回结果，放到sug数组中

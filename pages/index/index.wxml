@@ -8,7 +8,7 @@
     <image catchtap="getSearch" class="searchClass" src="/image/search.png"></image>
   </view>
   <!-- 这一块做推荐的内容，与关注的进行分开，是否分成组件还是看后期吧 -->
-  <block wx:if="{{segmentActiveKeyTag === 1}}">
+  <view wx:if="{{segmentActiveKeyTag === 1}}">
     <view class="indexWarp">
       <view class="recommend-wrap">
         <view class="recommendList">
@@ -36,7 +36,7 @@
         </view>
       </view>
     </view>
-  </block>
+  </view>
   <block wx:if="{{segmentActiveKeyTag === 0 && userInfo !== null && attentions.length !== 0}}">
     <view class="indexWarp">
       <view class="attention-wrap">

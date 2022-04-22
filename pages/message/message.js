@@ -79,7 +79,9 @@ Page({
       }) 
     } else {
       that.setData({
-        notLogin: false
+        notLogin: false,
+        messageBean: [],
+        messageStart: 0
       }) 
       this.getMessageList()
     }

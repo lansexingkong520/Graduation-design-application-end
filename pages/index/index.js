@@ -186,5 +186,24 @@ Page({
       that.data.recommendStart += 1
     }
     that.getRecommendList()
+  },
+  // 下拉刷新
+  onPullDownRefresh () {
+    var that = this
+    if (that.data.segmentActiveKeyTag === 0) {
+      that.setData({
+        attentions: [],
+        attentionStart: 0
+      })
+    }
+    if (that.data.segmentActiveKeyTag === 1) {
+      that.setData({
+        recommends: [],
+        recommendLeft: [],
+        recommendRight: [],
+        recommendStart: 0
+      })
+    }
+    that.getRecommendList()
   }
 })

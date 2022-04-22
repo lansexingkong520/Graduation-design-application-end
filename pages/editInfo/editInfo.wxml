@@ -29,7 +29,7 @@
     <view class="editName" bindtap="onClickEditIntroduction">
       <view>个人简介</view>
       <view class="nameLocation">
-        <view style="position: absolute;right: 10px;width: 150px;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;">{{userInfo.selfintroduction}} </view>
+        <view wx:if="{{userInfo.selfintroduction !== null}}" style="position: absolute;right: 10px;width: 150px;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;">{{userInfo.selfintroduction}} </view>
         <image style="width: 16px;height: 16px;position: absolute;right: 0;top: 0;" src="../../image/rightArrow.png"></image>
       </view>
       <view style="border-bottom: 1px solid #8a8a8a8a;margin: 10px 0;"></view>

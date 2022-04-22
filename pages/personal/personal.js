@@ -115,11 +115,20 @@ Page({
   changeTabs: function (e) {
     var that = this
     that.setData({
-      segmentActiveKeyTag: e.detail.currentIndex
+      segmentActiveKeyTag: e.detail.currentIndex,
+      notes: [],
+      noteLeft: [],
+      noteRight: [],
+      // 笔记起始搜索
+      noteStart: 0,
+      // 收藏的帖子
+      collections: [],
+      collectionLeft: [],
+      collectionRight: [],
+      // 收藏帖子起始搜索
+      collectionStart: 0
     })
-    if (that.data.noteLeft.length === 0 || that.data.collectionLeft.length === 0) {
-      that.getPostList()
-    }
+    that.getPostList()
   },
   // 点击登录页面
   onClickNavigateLogin: function (event) {
@@ -142,13 +151,6 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
     var that = this
     if (app.globalData.userInfo === null) {
       that.setData({
@@ -159,41 +161,45 @@ Page({
         isLogin: false,
         userInfo: app.globalData.userInfo
       })
-      that.getPostList()
     }
   },
 
   /**
+   * 生命周期函数--监听页面初次渲染完成
+   */
+  onReady: function () {
+
+  },
+
+  /**
    * 生命周期函数--监听页面显示
+   * 因为小程序的onLoad和onReady只加载最初的一次，所以只有在onShow里面加载列表内容
+   * 但是onShow每次显示都会进行调用，所以就选择清空之前的数据，重新搜索用户的笔记和收藏。
    */
   onShow: function () {
-    // var that = this
-    // if (app.globalData.userInfo === null) {
-    //   that.setData({
-    //     isLogin: true
-    //   }) 
-    // } else {
-    //   that.setData({
-    //     isLogin: false,
-    //     userInfo: app.globalData.userInfo
-    //   })
-    //   that.getPostList()
-    // }
-    // let isUserInfo = wx.getStorageSync('userInfo')
-    // if (isUserInfo === null || isUserInfo === "") {
-    //   that.setData({
-    //     isLogin: true
-    //   }) 
-    // } else {
-    //   that.setData({
-    //     isLogin: false,
-    //     userInfo: {
-    //       name: isUserInfo.username,
-    //       id: isUserInfo.uid,
-    //       picURL: isUserInfo.picURL
-    //     }
-    //   }) 
-    // }
+    var that = this
+    if (app.globalData.userInfo === null) {
+      that.setData({
+        isLogin: true
+      }) 
+    } else {
+      that.setData({
+        isLogin: false,
+        userInfo: app.globalData.userInfo,
+        notes: [],
+        noteLeft: [],
+        noteRight: [],
+        // 笔记起始搜索
+        noteStart: 0,
+        // 收藏的帖子
+        collections: [],
+        collectionLeft: [],
+        collectionRight: [],
+        // 收藏帖子起始搜索
+        collectionStart: 0
+      })
+      that.getPostList()
+    }
   },
 
   /**
